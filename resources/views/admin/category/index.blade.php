@@ -5,6 +5,7 @@
         <h4 class="fw-bold py-3 mb-4" style="text-align: center">
             <span class="text-muted fw-light"></span>Category
         </h4>
+        <a href="{{ route('admin.category.create') }}" class="btn btn-primary mb-3">Create</a>
         <div class="card">
 
             <div class="table-responsive text-nowrap">
@@ -13,14 +14,19 @@
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
+                        <th>Parent Category Name</th>
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    @foreach($categorys as $category)
+                    @foreach($categories as $category)
                     <tr>
                         <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $category->id }}</strong></td>
                         <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $category->name }}</strong></td>
-                        
+                        @if(isset($category->parent))
+                        <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $category->parent->name }}</strong></td>
+                        @else
+                        <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i></td>
+                        @endif
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>

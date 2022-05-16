@@ -21,21 +21,25 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categorys = $this->category->getAll();
+        $categories = $this->category->getAll();
+
         return view('admin.category.index', [
-            'categorys' => $categorys
+            'categories' => $categories
         ]);
     }
 
     public function create()
     {
-        return view('admin.category.create');
+        $parentCategories = $this->category->getAll();
+
+        return view('admin.category.create', ['parentCategories' => $parentCategories]);
     }
 
-    public function store(CategoryRequest $request)
+    public function store(Request $request)
     {
         DB::beginTransaction();
         try {
+//            dd($request->all());
             $this->category->create($request->all());
             DB::commit();
 
@@ -50,10 +54,13 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = $this->category->find($id);
+        $parentCategories = $this->category->getAllWithoutId($id);
 
-        return view('admin.categorys.edit', ['category' => $category]);
-
-        // return abort(404);
+        return view('admin.category.edit',
+            [
+                'category' => $category,
+                'parentCategories' => $parentCategories
+            ]);
     }
 
     public function update(Request $request, $id)
