@@ -5,6 +5,7 @@ namespace App\Http\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -89,16 +90,22 @@ class User extends Authenticatable
     {
         $data = $request->all();
 
-        if ($request->hasFile('avatar')) {
-            $file= $request->file('avatar');
-            $filename= date('YmdHis') . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images/avatar'), $filename);
-            $data['avatar']= $filename;
+        $user = User::find($id);
+
+        if ($user && ($user->role == User::ROLE_ADMIN || $id == Auth::user()->id)) {
+            if ($request->hasFile('avatar')) {
+                $file= $request->file('avatar');
+                $filename= date('YmdHis') . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('images/avatar'), $filename);
+                $data['avatar']= $filename;
+            }
+
+            if ($data['password'] == null) unset($data['password']);
+
+            return $user->update($data);
         }
 
-        if ($data['password'] == null) unset($data['password']);
-
-        return User::find($id)->update($data);
+        return false;
     }
 
 }

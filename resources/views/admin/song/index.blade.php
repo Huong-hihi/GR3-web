@@ -5,6 +5,7 @@
         <h4 class="fw-bold py-3 mb-4" style="text-align: center">
             <span class="text-muted fw-light"></span>Song
         </h4>
+        <a href="{{ route('admin.song.create') }}" class="btn btn-primary mb-3">Create</a>
         <div class="card">
 
             <div class="table-responsive text-nowrap">
@@ -23,6 +24,7 @@
                     </thead>
                     <tbody class="table-border-bottom-0">
                     @foreach($songs as $song)
+
                     <tr>
                         <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->id }}</strong></td>
                         <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->name }}</strong></td>

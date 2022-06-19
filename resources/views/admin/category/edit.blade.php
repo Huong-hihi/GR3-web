@@ -22,7 +22,7 @@
                             <div class="mb-3 col-md-6">
                                 <label for="parent_id" class="form-label">Parent Category:</label>
                                 <select id="parent_id" class="form-select" name="parent_id">
-                                    <option>----------</option>
+                                    <option value="">----------</option>
                                     @foreach($parentCategories as $parentCategory)
                                         <option value="{{ $parentCategory->id }}" {{ $category->parent_id === $parentCategory->id ? 'selected' : '' }}>{{ $parentCategory->name }}</option>
                                     @endforeach

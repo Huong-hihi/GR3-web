@@ -56,6 +56,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function () {
         Route::get('{id}/delete', 'CategoryController@delete')->name('admin.category.delete');
     });
 
+
 });
 
-Route::get('home', 'HomeController@index')->name('home');
+Route::group(['namespace' => 'Client'], function () {
+    Route::get('', 'HomeController@index')->name('home');
+    Route::get('song/{id}', 'SongController@detail')->name('client.song.detail');
+    Route::get('singer/{id}', 'SingerController@detail')->name('client.singer.detail');
+    Route::get('album/{id}', 'AlbumController@detail')->name('client.album.detail');
+    Route::get('profile', 'ProfileController@index')->name('client.profile.index');
+    Route::put('profile', 'ProfileController@update')->name('client.profile.update');
+    Route::post('rating/log/{song_id}', 'RatingController@log')->name('client.rating.log');
+
+});

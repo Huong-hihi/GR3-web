@@ -58,7 +58,7 @@ class UserController extends Controller
         return abort(404);
     }
 
-    public function update(UserUpdateRequest $request, $id)
+    public function update(UserUpdateRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
         DB::beginTransaction();
         try {
@@ -73,7 +73,7 @@ class UserController extends Controller
         }
     }
 
-    public function delete($id)
+    public function delete($id): \Illuminate\Http\RedirectResponse
     {
         $this->user->deleteUser($id);
 

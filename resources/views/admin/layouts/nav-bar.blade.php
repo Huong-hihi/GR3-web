@@ -1,6 +1,9 @@
+<?php
+$u = \Illuminate\Support\Facades\Auth::user();
+?>
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-        <a href="index.html" class="app-brand-link">
+        <a href="{{ route('home') }}" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg
                     width="25"
@@ -38,7 +41,7 @@
                   </g>
                 </svg>
               </span>
-            <span class="app-brand-text demo menu-text fw-bolder ms-2">Admin</span>
+            <span class="app-brand-text demo menu-text fw-bolder ms-2" style="text-transform: uppercase;">{{ $u->name }}</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -49,6 +52,7 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
+        @if($u->role === \App\Http\Models\User::ROLE_ADMIN)
         <li class="menu-item">
             <a href="{{ route('admin.user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
@@ -73,6 +77,17 @@
               <div data-i18n="Tables">Category</div>
           </a>
         </li>
+        @endif
+
+        @if($u->role === \App\Http\Models\User::ROLE_USER)
+            <li class="menu-item">
+                <a href="{{ route('client.profile.index') }}" class="menu-link">
+                    <i class='menu-icon tf-icons bx bxs-user-circle'></i>
+                    <div data-i18n="Tables">Profile</div>
+                </a>
+            </li>
+        @endif
+
         <li class="menu-item">
             <a href="{{ route('logout') }}" class="menu-link" id="logout">
                 <i class="menu-icon tf-icons bx bx-log-out"></i>

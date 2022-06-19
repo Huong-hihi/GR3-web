@@ -58,4 +58,9 @@ class Singer extends Model
     {
         return User::find($userID)->delete();
     }
+
+    public function getImageAttribute($attr): string
+    {
+        return 'images/singer/' . $attr;
+    }
 }

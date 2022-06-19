@@ -1,0 +1,307 @@
+/* Font Family
+================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap");
+
+
+html,body {
+    -webkit-font-smoothing:antialiased;
+    -webkit-text-size-adjust:100%;
+    font-size:1rem;
+    font-family:"Source Sans Pro", arial, sans-serif;
+    font-weight:400;
+    letter-spacing:.025rem;
+    line-height:1.618;
+}
+
+*,::before,::after {
+    box-sizing:border-box;
+}
+
+* {
+    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color:transparent;
+}
+
+#audio-player {
+    position: relative;
+    width: 45vw;
+}
+
+#plwrap {
+    margin-left: 50px;
+}
+
+#plwrap .list-track-name {
+    background-color: #364c6a;
+    padding-left: 13px;
+}
+
+#plList {
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+#audio-player .column {
+    width: inherit;
+}
+#audio-player p {
+    color: #fff;
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin: 0 0 2px;
+}
+#audio-player a, #audio-player a:visited {
+    color: #8cc3e6;
+    outline: 0;
+    text-decoration: underline;
+}
+#audio-player a:hover, #audio-player a:focus {
+    color: #bbdef5;
+}
+#audio-player p a, #audio-player p a:visited {
+    line-height: inherit;
+}
+#audio-player .add-bottom {
+    margin-bottom: 2rem !important;
+    border-radius: 3px;
+}
+
+#audio-player .left {
+    float: left;
+}
+#audio-player .right {
+    float: right;
+}
+#audio-player .center {
+    text-align: center;
+}
+#audio-player .hidden {
+    display: none;
+}
+#audio-player .no-support {
+    margin: 2rem auto;
+    text-align: center;
+    width: 90%;
+}
+#audio-player audio {
+    display: none;
+}
+#audio-player #audiowrap, #audio-player #plwrap {
+    margin: 0 auto;
+}
+#audio-player #tracks {
+    font-size: 0;
+    position: relative;
+    text-align: center;
+}
+#audio-player #nowPlay {
+    display: block;
+    font-size: 0;
+}
+#audio-player #nowPlay span {
+    display: inline-block;
+    font-size: 1.05rem;
+    vertical-align: top;
+}
+#audio-player #nowPlay span#npAction {
+    padding: 21px;
+    width: 30%;
+}
+#audio-player #nowPlay span#npTitle {
+    padding: 21px;
+    text-align: right;
+    width: 70%;
+}
+
+#plwrap {
+    font-size: 14px;
+}
+
+#plList li {
+    cursor: pointer;
+    display: block;
+    margin: 0;
+    padding: 21px 10px;
+    background-color: #21324a;
+}
+#plList li:nth-child(n+2):hover {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+#plwrap  .plItem {
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+}
+#plwrap .plTitle {
+    width: 220px;
+    overflow: hidden;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+#plwrap .plNum {
+    padding-left: 2px;
+    width: 25px;
+}
+#plwrap .plLength {
+    padding-left: 21px;
+    right: 21px;
+    top: 0;
+}
+#plwrap .plSel, #plwrap .plSel:hover {
+    background-color: rgba(0, 0, 0, .1);
+    color: #fff;
+    cursor: default !important;
+}
+#audio-player #tracks a {
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 2.3rem;
+    height: 40px;
+    line-height: 0.2;
+    margin: 0 5px 30px;
+    padding: 12px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+#audio-player #tracks a:hover, #audio-player #tracks a:active {
+    background-color: #00b3ff;;
+    color: #fff;
+}
+
+#audio-player #tracks a::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+#plwrap .plyr--audio .plyr__controls {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-family: "Source Sans Pro", arial, sans-serif;
+    padding: 20px 20px 20px 13px;
+    width: 100%;
+}
+#plwrap a.plyr__controls__item.plyr__control:hover, #plwrap .plyr--audio .plyr__controls button:hover, #plwrap .plyr--audio .plyr__controls button.tab-focus:focus, #plwrap .plyr__play-large {
+    background-color: rgba(0, 0, 0, .1);
+}
+#plwrap .plyr__progress--played, #plwrap .plyr__volume--display {
+    color: rgba(0, 0, 0, .1);
+}
+#plwrap .plyr--audio .plyr__progress--buffer, #plwrap .plyr--audio .plyr__volume--display {
+    background-color: rgba(0, 0, 0, .1);
+}
+#plwrap .plyr--audio .plyr__progress--buffer {
+    color: rgba(0, 0, 0, .1);
+}
+#plwrap .plyr__controls .plyr__controls__item.plyr__time {
+    font-size: 14px;
+    margin-left: 7px;
+}
+@media only screen and (max-width: 600px) {
+    #audio-player #nowPlay span#npAction {
+        display: none;
+    }
+    #audio-player #nowPlay span#npTitle {
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
+}
+
+
+#audio-player .audio-player-box{
+    background-size: cover;
+    position: relative;
+}
+
+#audio-player .back-drop-song{
+    background-size: cover;
+    opacity: 0.3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.rating {
+    font-size: 2em;
+    padding-top: 20px;
+}
+.rating .star-cb-group {
+    font-size: 0;
+    /* flip the order so we can use the + and ~ combinators */
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    /* the hidden clearer */
+}
+.rating .star-cb-group * {
+    font-size: 1.5rem;
+}
+.rating .star-cb-group > input {
+    display: none;
+}
+.rating .star-cb-group > input + label {
+    /* only enough room for the star */
+    display: inline-block;
+    overflow: hidden;
+    text-indent: 9999px;
+    width: 1em;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.rating .star-cb-group > input + label:before {
+    display: inline-block;
+    text-indent: -9999px;
+    content: '\2606';
+    color: #888;
+}
+.rating .star-cb-group > input:checked ~ label:before, .rating .star-cb-group > input + label:hover ~ label:before, .rating .star-cb-group > input + label:hover:before {
+    content: '\2605';
+    color: #e52;
+    text-shadow: 0 0 1px #333;
+}
+.rating .star-cb-group > .star-cb-clear + label {
+    text-indent: -9999px;
+    width: 0.5em;
+    margin-left: -0.5em;
+}
+.rating .star-cb-group > .star-cb-clear + label:before {
+    width: 0.5em;
+}
+.rating .star-cb-group:hover > input + label:before {
+    content: '\2606';
+    color: #888;
+    text-shadow: none;
+}
+.rating .star-cb-group:hover > input + label:hover ~ label:before, .rating .star-cb-group:hover > input + label:hover:before {
+    content: '\2605';
+    color: #e52;
+    text-shadow: 0 0 1px #333;
+}
+.rating fieldset {
+    border: 0;
+    width: 8em;
+    border-radius: 1px;
+    padding: 0;
+}
+.rating #log {
+    margin: 1em auto;
+    width: 5em;
+    text-align: center;
+    background: transparent;
+}
+.rating h1 {
+    text-align: center;
+}
+
+.rating h3 {
+    font-size: 18px;
+}
+

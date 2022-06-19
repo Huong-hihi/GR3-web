@@ -3,13 +3,12 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light"></span> Singer Setting
+            <span class="text-muted fw-light"></span> Singer Create
         </h4>
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
                     <form method="POST" action="{{ route('admin.singer.store') }}" enctype="multipart/form-data">
-                        <h5 class="card-header">Singer Create</h5>
                         <div class="card-body">
                             <div class="d-flex align-items-start align-items-sm-center gap-4">
                                 <img src="{{ cxl_asset('images/default-user-image.png') }}" alt="user-avatar"

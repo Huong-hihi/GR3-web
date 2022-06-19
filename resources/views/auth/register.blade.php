@@ -1,6 +1,8 @@
 @extends('app')
 
-@section('style', cxl_asset('css/page-auth.css'))
+@section('style')
+    <link rel="stylesheet" href="{{ cxl_asset('css/page-auth.css') }}" />
+@endsection
 
 @section('body-attribute', 'cz-shortcut-listen="true"')
 
