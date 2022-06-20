@@ -63,6 +63,7 @@ data-user-id="{{ $user->id ?? 'null' }}"
 <script>
     let userId = $('.master-data').attr('data-user-id') != 'null' ? $('.master-data').attr('data-user-id') : false;
 </script>
+
 @yield('script')
 
 </body>

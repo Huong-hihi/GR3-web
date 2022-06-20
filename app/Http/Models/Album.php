@@ -34,4 +34,17 @@ class Album extends Model
     {
         return Album::with('songs')->paginate(3);
     }
+
+    public static function createAlbum($request)
+    {
+        $data = $request->only('user_id', 'name');
+        if (!$request->name) $data['name'] = config('common.text.album-name-default');
+
+        return Album::create($request);
+    }
+
+    public static function findAlbumByUserId($userId)
+    {
+        return Album::find('user_id', $userId);
+    }
 }

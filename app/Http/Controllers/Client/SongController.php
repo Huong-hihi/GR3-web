@@ -8,6 +8,7 @@ use App\Http\Models\Singer;
 use App\Http\Models\Song;
 use App\Traits\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SongController extends Controller
 {
@@ -35,9 +36,11 @@ class SongController extends Controller
      */
     public function detail($id)
     {
+        $user = Auth::user();
         $categories = $this->category::orderBy('id','DESC')->paginate(3);
         $listSongs = [$this->song->find($id)];
+        $listSongsMyAlbum = $user ? $this->album->findAlbumByUserId($user->id)->songs : [];
 
-        return view('client.track')->with(compact('categories','listSongs'));
+        return view('client.track')->with(compact('categories','listSongs', 'listSongsMyAlbum'));
     }
 }

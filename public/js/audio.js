@@ -66,15 +66,15 @@ jQuery(function ($) {
                 }
             }),
             li = $('#plList li:nth-child(n+2)').on('click', function () {
-                var id = $(this).attr('data-track-id');
+                var id = $(this).attr('data-playlist-track-index');
                 if (id !== index) {
                     playTrack(id);
                 }
             }),
             loadTrack = function (id) {
-                let trackCurrent = $('[data-track-id="' + id + '"]')
-                let songId = trackCurrent.attr('data-song-id');
-                let songRatingScore = trackCurrent.attr('data-song-rating-score');
+                let trackCurrent = $('[data-playlist-track-index="' + id + '"]')
+                let songId = trackCurrent.attr('data-track-id');
+                let songRatingScore = trackCurrent.attr('data-track-rating-score');
                 let formRating = $('.form-rating');
                 $('.rating-score').parent().css('display', 'none');
                 $('#plList').attr('data-track-id-current', songId)

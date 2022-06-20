@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Models\Album;
 use App\Http\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -14,10 +15,15 @@ class UserController extends Controller
     use SoftDeletes;
 
     private $user;
+    private $album;
 
-    public function __construct(User $user)
+    public function __construct(
+        User $user,
+        Album $album
+    )
     {
         $this->user = $user;
+        $this->album = $album;
     }
 
     public function index()
@@ -37,7 +43,9 @@ class UserController extends Controller
     {
         DB::beginTransaction();
         try {
-            $this->user->store($request);
+            $user = $this->user->store($request);
+            $request->merge(['user_id' => $user->id]);
+            $this->album->createAlbum($request);
             DB::commit();
 
             return redirect()->route('admin.user.index')->with('status', 'success');

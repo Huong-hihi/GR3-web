@@ -24,6 +24,9 @@
                             </div>
                         </div>
                     </div>
+                    <button id="btn-add-my-album">
+                        add
+                    </button>
                     <div class="rating">
                         <h3>Bạn hãy đánh giá bài hát</h3>
                         <form
@@ -58,7 +61,7 @@
             </div>
 
             <div id="plwrap">
-                <ul id="plList" data-count-track="{{ count($listSongs) }}" data-track-id-current="{{ $listSongs[0]->id }}">
+                <ul id="plList" data-count-song="{{ count($listSongs) }}" data-song-id-current="{{ $listSongs[0]->id }}">
                     <li class="list-track-name">
                         <div >
                             <h4>PLAY LIST</h4>
@@ -67,16 +70,17 @@
                     </li>
                     @foreach($listSongs as $item)
                         <li
-                            data-track-id="{{ $loop->index }}"
-                            data-track-url="{{ $item->file_mp3 }}"
+                            data-playlist-song-index="{{ $loop->index }}"
+                            data-song-url="{{ $item->file_mp3 }}"
                             data-song-id="{{ $item->id }}"
-                            data-track-lyric="{!! nl2br($item->lyric) !!}"
+                            data-song-lyric="{!! nl2br($item->lyric) !!}"
                             data-song-rating-score = '{{ isset($item->ratings[0]) ? $item->ratings[0]->score : '0' }}'
                         >
                             <div class="plItem">
                                 <span class="plNum">{{ $loop->index + 1 }}.</span>
                                 <span class="plTitle">{{ $item->name }}</span>
                                 <span class="plLength"></span>
+                                <span class="plAddTrack"></span>
                             </div>
                         </li>
                     @endforeach
@@ -117,8 +121,36 @@
                         },
                         success: function (data, textStatus, xhr) {
                             if(xhr.status === 200) {
-                                let trackIdCurrent = $('#plList').attr('data-track-id-current');
-                                $('[data-song-id="' + trackIdCurrent +'"]').attr('data-song-rating-score', score)
+                                let songIdCurrent = $('#plList').attr('data-song-id-current');
+                                $('[data-song-id="' + songIdCurrent +'"]').attr('data-song-rating-score', score)
+                            }
+                        },
+                        error: function (e) {
+
+                        }
+                    })
+                }
+            })
+
+            $(document).on('click', '.plAddTrack', function (e) {
+                e.preventDefault();
+                if(!userId) {
+                    window.location.href = '{{ route('login') }}';
+                } else {
+                    let songIdCurrent = $(this).parent().attr('data-song-id')
+                    $.ajax({
+                        url: '{{ route('client.my-album.update') }}',
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            song_id: songIdCurrent,
+                            action: 'create'
+                        },
+                        success: function (data, textStatus, xhr) {
+                            if(xhr.status === 200) {
+                                console.log(xhr)
                             }
                         },
                         error: function (e) {

@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="section-tv"id="new-song">
+        <div class="section-tv" id="new-song">
             <div class="section-wrapper" id="section-wrapper">
                 <div class="section-header">
                     New song

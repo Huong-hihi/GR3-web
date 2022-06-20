@@ -43,9 +43,5 @@ class RatingController extends Controller
 
 
         return response(['message' => 'success', 'score' => $rating->score], 200);
-
-//        return view('admin.song.index', [
-//            'songs' => $songs
-//        ]);
     }
 }

@@ -55,8 +55,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function () {
         Route::put('{id}/update', 'CategoryController@update')->name('admin.category.update');
         Route::get('{id}/delete', 'CategoryController@delete')->name('admin.category.delete');
     });
-
-
 });
 
 Route::group(['namespace' => 'Client'], function () {
@@ -67,5 +65,7 @@ Route::group(['namespace' => 'Client'], function () {
     Route::get('profile', 'ProfileController@index')->name('client.profile.index');
     Route::put('profile', 'ProfileController@update')->name('client.profile.update');
     Route::post('rating/log/{song_id}', 'RatingController@log')->name('client.rating.log');
+    Route::get('my-album', 'AlbumController@myAlbumIndex')->name('client.my-album.index');
+    Route::post('my-album/update', 'AlbumController@myAlbumUpdate')->name('client.my-album.update');
 
 });
