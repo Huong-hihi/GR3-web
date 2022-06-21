@@ -59,6 +59,12 @@ class Song extends Model
     public function ratings()
     {
         $user = Auth::user();
-        return $this->hasMany(Rating::class, 'song_id', 'id')->where('user_id', $user->id);
+        return $this->hasMany(Rating::class, 'song_id', 'id')
+            ->when($user, function ($q) use ($user) {
+            $q->where('user_id', $user->id);
+            })
+            ->when(!$user, function ($q) {
+            $q->where('user_id', 0);
+        });
     }
 }
