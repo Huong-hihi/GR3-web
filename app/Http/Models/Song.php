@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Process\Process;
+
 
 class Song extends Model
 {
@@ -36,9 +38,26 @@ class Song extends Model
         return Song::all();
     }
 
+    public static function getSongInIds($ids)
+    {
+        return Song::whereIn('id', $ids)->get();
+    }
+
     public static function getAllHasWith()
     {
         return Song::with('category')->get();
+    }
+
+    public static function handleGetRecommendSong()
+    {
+        $user = Auth::user();
+        if (!$user) return [];
+
+        $process = new Process(['C:\Users\HuongDT2\WorkSpace\mp3\test.py', $user->id]);
+        $process->run();
+        $result = $process->getOutput();
+        $recommendResult = explode(' ', substr($result, 2, -1));
+        return Song::getSongInIds($recommendResult);
     }
 
     public function getFileMp3Attribute($attr): string

@@ -371,6 +371,7 @@ html, body {
 
 #list-songs-wrapper {
     margin-left: 50px;
+    width: 25%;
 }
 
 .recommend-list-songs-wrapper {

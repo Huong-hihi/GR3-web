@@ -136,6 +136,7 @@ jQuery(function ($) {
                     playSong(id);
                 }
             }), loadSong = function (id) {
+                console.log(id)
                 let songCurrent = $('[data-playlist-song-index="' + id + '"]')
                 let songId = songCurrent.attr('data-song-id');
                 let songRatingScore = songCurrent.attr('data-song-rating-score');

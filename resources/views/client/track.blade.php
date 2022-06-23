@@ -101,49 +101,27 @@
                         <div class="recommend-list-songs">
                             <div class="inner">
                                 <ul>
-                                    <li>
-                                        <div class="recommend-song">
-                                            <div class="recommend-song-image">
-                                                <img src="{{ cxl_asset('/images/song/6.jpg') }}" alt="">
+                                    @foreach($listRecomendSongs as $song)
+                                    
+                                        <li>
+                                            <a href="{{ route('client.song.detail', ['id'=> $song->id])}}">
+                                            <div class="recommend-song">
+                                                <div class="recommend-song-image">
+                                                    <img src="{{ $song->image }}" alt="">
+                                                </div>
+                                                <div class="recommend-infomation">
+                                                    <span href="" class="recommend-song-name">{{ $song->name }}</span>
+                                                    <span href="" class="recommend-singer">{{ $song->singer }}</span>
+                                                </div>
+                                                <div class="recommend-add-btn">
+                                                    <i class='bx bx-plus-circle recommend-add-image'></i>
+                                                    {{--                                                <i class='bx bx-list-check' ></i>--}}
+                                                </div>
                                             </div>
-                                            <div class="recommend-infomation">
-                                                <a href="" class="recommend-song-name">Để Anh Được Yêu</a>
-                                                <a href="" class="recommend-singer">Chí Thiện</a>
-                                            </div>
-                                            <div class="recommend-add-btn">
-                                                <i class='bx bx-plus-circle recommend-add-image'></i>
-                                                {{--                                                <i class='bx bx-list-check' ></i>--}}
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="recommend-song">
-                                            <div class="recommend-song-image">
-                                                <img src="{{ cxl_asset('/images/song/8.jpg') }}" alt="">
-                                            </div>
-                                            <div class="recommend-infomation">
-                                                <a href="" class="recommend-song-name">Để Anh Được Yêu</a>
-                                                <a href="" class="recommend-singer">Chí Thiện</a>
-                                            </div>
-                                            <div class="recommend-add-btn">
-                                                <i class='bx bx-plus-circle recommend-add-image'></i>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="recommend-song">
-                                            <div class="recommend-song-image">
-                                                <img src="{{ cxl_asset('/images/song/9.jpg') }}" alt="">
-                                            </div>
-                                            <div class="recommend-infomation">
-                                                <a href="" class="recommend-song-name">Để Anh Được Yêu</a>
-                                                <a href="" class="recommend-singer">Chí Thiện</a>
-                                            </div>
-                                            <div class="recommend-add-btn">
-                                                <i class='bx bx-plus-circle recommend-add-image'></i>
-                                            </div>
-                                        </div>
-                                    </li>
+                                        </a> 
+                                        </li>
+                                                                  
+                                    @endforeach
                                 </ul>
 
                             </div>

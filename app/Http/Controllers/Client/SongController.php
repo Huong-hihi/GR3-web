@@ -39,8 +39,9 @@ class SongController extends Controller
         $user = Auth::user();
         $categories = $this->category::orderBy('id','DESC')->paginate(3);
         $listSongs = [$this->song->find($id)];
-        $listSongsMyAlbum = $user ? $this->album->findAlbumByUserId($user->id)->songs : [];
+        // $listSongsMyAlbum = $user ? $this->album->findAlbumByUserId($user->id)->songs : [];
+        $listRecomendSongs = $this->song->handleGetRecommendSong();
 
-        return view('client.track')->with(compact('categories','listSongs', 'listSongsMyAlbum'));
+        return view('client.track')->with(compact('categories','listSongs', 'listRecomendSongs'));
     }
 }

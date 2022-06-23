@@ -61,9 +61,9 @@ class AlbumController extends Controller
             if ($user) $q->with('ratings');
         }])->get();
         $listSongs = $album[0]->songs;
-        $listSongsMyAlbum = $user ? $this->album->findAlbumByUserId($user->id)->songs : [];
+        $listRecomendSongs = $this->song->handleGetRecommendSong();
 
-        return view('client.track')->with(compact('categories','listSongs', 'listSongsMyAlbum'));
+        return view('client.track')->with(compact('categories','listSongs', 'listRecomendSongs'));
     }
 
     /**
