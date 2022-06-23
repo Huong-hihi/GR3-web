@@ -16,17 +16,13 @@
                             </div>
                             <div id="audiowrap">
                                 <div id="audio0">
-                                    <audio id="audio1" preload controls>Your browser does not support HTML5 Audio! 😢</audio>
-                                </div>
-                                <div id="tracks">
-                                    <a id="btnPrev"><img src="{{ asset('assets/img/icon-back.png') }}" alt=""></a><a id="btnNext"><img src="{{ asset('assets/img/icon-next.png') }}" alt=""></a>
+                                    <audio id="audio1" preload controls>Your browser does not support HTML5 Audio! 😢
+                                    </audio>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button id="btn-add-my-album">
-                        add
-                    </button>
+
                     <div class="rating">
                         <h3>Bạn hãy đánh giá bài hát</h3>
                         <form
@@ -37,12 +33,18 @@
                             @csrf
                             <fieldset>
                             <span class="star-cb-group">
-                              <input type="radio" id="rating-5" name="rating" value="5" class="rating-star"/><label for="rating-5">5</label>
-                              <input type="radio" id="rating-4" name="rating" value="4" class="rating-star"/><label for="rating-4">4</label>
-                              <input type="radio" id="rating-3" name="rating" value="3" class="rating-star"/><label for="rating-3">3</label>
-                              <input type="radio" id="rating-2" name="rating" value="2" class="rating-star"/><label for="rating-2">2</label>
-                              <input type="radio" id="rating-1" name="rating" value="1" class="rating-star"/><label for="rating-1">1</label>
-                              <input type="radio" id="rating-0" name="rating" value="0" class="star-cb-clear"/><label for="rating-0">0</label>
+                              <input type="radio" id="rating-5" name="rating" value="5" class="rating-star"/><label
+                                    for="rating-5">5</label>
+                              <input type="radio" id="rating-4" name="rating" value="4" class="rating-star"/><label
+                                    for="rating-4">4</label>
+                              <input type="radio" id="rating-3" name="rating" value="3" class="rating-star"/><label
+                                    for="rating-3">3</label>
+                              <input type="radio" id="rating-2" name="rating" value="2" class="rating-star"/><label
+                                    for="rating-2">2</label>
+                              <input type="radio" id="rating-1" name="rating" value="1" class="rating-star"/><label
+                                    for="rating-1">1</label>
+                              <input type="radio" id="rating-0" name="rating" value="0" class="star-cb-clear"/><label
+                                    for="rating-0">0</label>
                             </span>
                             </fieldset>
                         </form>
@@ -60,32 +62,97 @@
                 </div>
             </div>
 
-            <div id="plwrap">
-                <ul id="plList" data-count-song="{{ count($listSongs) }}" data-song-id-current="{{ $listSongs[0]->id }}">
-                    <li class="list-track-name">
-                        <div >
-                            <h4>PLAY LIST</h4>
-                            <p>{{ count($listSongs) }} track</p>
-                        </div>
-                    </li>
-                    @foreach($listSongs as $item)
-                        <li
-                            data-playlist-song-index="{{ $loop->index }}"
-                            data-song-url="{{ $item->file_mp3 }}"
-                            data-song-id="{{ $item->id }}"
-                            data-song-lyric="{!! nl2br($item->lyric) !!}"
-                            data-song-rating-score = '{{ isset($item->ratings[0]) ? $item->ratings[0]->score : '0' }}'
-                        >
-                            <div class="plItem">
-                                <span class="plNum">{{ $loop->index + 1 }}.</span>
-                                <span class="plTitle">{{ $item->name }}</span>
-                                <span class="plLength"></span>
-                                <span class="plAddTrack"></span>
+            <div id="list-songs-wrapper">
+                <div id="plwrap">
+                    <ul id="plList" data-count-song="{{ count($listSongs) }}"
+                        data-song-id-current="{{ $listSongs[0]->id }}">
+                        <li class="list-track-name">
+                            <div>
+                                <h4>PLAY LIST</h4>
+                                <p>{{ count($listSongs) }} track</p>
                             </div>
                         </li>
-                    @endforeach
-                </ul>
+                        <div class="list-tracks-scroll">
+                            @foreach($listSongs as $item)
+                                <li
+                                    data-playlist-song-index="{{ $loop->index }}"
+                                    data-song-url="{{ $item->file_mp3 }}"
+                                    data-song-id="{{ $item->id }}"
+                                    data-song-lyric="{!! nl2br($item->lyric) !!}"
+                                    data-song-rating-score='{{ isset($item->ratings[0]) ? $item->ratings[0]->score : '0' }}'
+                                >
+                                    <div class="plItem">
+                                        <div class="song-image-wrapper">
+                                            <img class="song-image" src="{{ $item->image }}"/>
+                                        </div>
+                                        <span class="plTitle">{{ $item->name }}</span>
+
+                                        <div class="plLength"></div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </div>
+
+                    </ul>
+                </div>
+                <div class="recommend-list-songs-wrapper">
+                    <div class="recommend-inner">
+                        <h3>Có thể bạn thích nghe</h3>
+                        <div class="recommend-list-songs">
+                            <div class="inner">
+                                <ul>
+                                    <li>
+                                        <div class="recommend-song">
+                                            <div class="recommend-song-image">
+                                                <img src="{{ cxl_asset('/images/song/6.jpg') }}" alt="">
+                                            </div>
+                                            <div class="recommend-infomation">
+                                                <a href="" class="recommend-song-name">Để Anh Được Yêu</a>
+                                                <a href="" class="recommend-singer">Chí Thiện</a>
+                                            </div>
+                                            <div class="recommend-add-btn">
+                                                <i class='bx bx-plus-circle recommend-add-image'></i>
+                                                {{--                                                <i class='bx bx-list-check' ></i>--}}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="recommend-song">
+                                            <div class="recommend-song-image">
+                                                <img src="{{ cxl_asset('/images/song/8.jpg') }}" alt="">
+                                            </div>
+                                            <div class="recommend-infomation">
+                                                <a href="" class="recommend-song-name">Để Anh Được Yêu</a>
+                                                <a href="" class="recommend-singer">Chí Thiện</a>
+                                            </div>
+                                            <div class="recommend-add-btn">
+                                                <i class='bx bx-plus-circle recommend-add-image'></i>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="recommend-song">
+                                            <div class="recommend-song-image">
+                                                <img src="{{ cxl_asset('/images/song/9.jpg') }}" alt="">
+                                            </div>
+                                            <div class="recommend-infomation">
+                                                <a href="" class="recommend-song-name">Để Anh Được Yêu</a>
+                                                <a href="" class="recommend-singer">Chí Thiện</a>
+                                            </div>
+                                            <div class="recommend-add-btn">
+                                                <i class='bx bx-plus-circle recommend-add-image'></i>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
         </div>
     </div>
 @endsection
@@ -100,7 +167,7 @@
 
             $(document).on('click', 'fieldset label', function (e) {
                 e.preventDefault();
-                if(!userId) {
+                if (!userId) {
                     window.location.href = '{{ route('login') }}';
                 } else {
                     let form = $('.form-rating');
@@ -120,9 +187,9 @@
                             score: score
                         },
                         success: function (data, textStatus, xhr) {
-                            if(xhr.status === 200) {
+                            if (xhr.status === 200) {
                                 let songIdCurrent = $('#plList').attr('data-song-id-current');
-                                $('[data-song-id="' + songIdCurrent +'"]').attr('data-song-rating-score', score)
+                                $('[data-song-id="' + songIdCurrent + '"]').attr('data-song-rating-score', score)
                             }
                         },
                         error: function (e) {
@@ -134,7 +201,7 @@
 
             $(document).on('click', '.plAddTrack', function (e) {
                 e.preventDefault();
-                if(!userId) {
+                if (!userId) {
                     window.location.href = '{{ route('login') }}';
                 } else {
                     let songIdCurrent = $(this).parent().attr('data-song-id')
@@ -149,7 +216,7 @@
                             action: 'create'
                         },
                         success: function (data, textStatus, xhr) {
-                            if(xhr.status === 200) {
+                            if (xhr.status === 200) {
                                 console.log(xhr)
                             }
                         },
