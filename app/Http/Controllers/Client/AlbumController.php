@@ -59,11 +59,17 @@ class AlbumController extends Controller
         $categories = $this->category::orderBy('id','DESC')->get();
         $album = $this->album::findOrFail($id)->with(['songs' => function($q) use ($user){
             if ($user) $q->with('ratings');
-        }])->get();
-        $listSongs = $album[0]->songs;
-        $listRecomendSongs = $this->song->handleGetRecommendSong();
+        }])->first();
+        $listSongs = $album->songs;
+        $listRecommendSongs = [];
+        $listSongsMyAlbumHash = [];
 
-        return view('client.track')->with(compact('categories','listSongs', 'listRecomendSongs'));
+        if ($user) {
+            $listRecommendSongs = $this->song->handleGetRecommendSong();
+            $listSongsMyAlbumHash = $this->album->getListSongsMyAlbumHash($album->id);
+        }
+
+        return view('client.track')->with(compact('categories','listSongs', 'listRecommendSongs', 'listSongsMyAlbumHash'));
     }
 
     /**
@@ -95,12 +101,14 @@ class AlbumController extends Controller
                 }
 
                 //add song
-               $myAlbum->songs->attach($request->song_id);
+                $myAlbum = $this->album->findAlbum($myAlbum->id);
+                $myAlbum->songs()->detach($request->song_id);
+                $myAlbum->songs()->attach($request->song_id);
                 break;
             }
 
             case 'delete' : {
-                $myAlbum->songs->detach($request->song_id);
+                $myAlbum->songs()->detach($request->song_id);
                 break;
             }
 

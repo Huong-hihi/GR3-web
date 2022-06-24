@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
-use App\Http\Models\Category;
-use App\Http\Models\Singer;
-use App\Http\Models\Song;
 use App\Traits\File;
-use Illuminate\Http\Request;
+use App\Http\Models\Song;
+use App\Http\Models\Album;
+use App\Http\Models\Category;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class SongController extends Controller
 {
@@ -19,14 +18,14 @@ class SongController extends Controller
      */
     private $song;
     private $category;
-    private $file;
+    private $album;
 
 
-    public function __construct(Song $song, Category $category, File $file)
+    public function __construct(Song $song, Category $category, Album $album)
     {
         $this->song = $song;
         $this->category = $category;
-        $this->file = $file;
+        $this->album = $album;
     }
 
     /**
@@ -39,9 +38,15 @@ class SongController extends Controller
         $user = Auth::user();
         $categories = $this->category::orderBy('id','DESC')->paginate(3);
         $listSongs = [$this->song->find($id)];
-        // $listSongsMyAlbum = $user ? $this->album->findAlbumByUserId($user->id)->songs : [];
-        $listRecomendSongs = $this->song->handleGetRecommendSong();
+        $listSongsMyAlbumHash = [];
+        $listRecommendSongs = [];
 
-        return view('client.track')->with(compact('categories','listSongs', 'listRecomendSongs'));
+        if ($user) {
+            $listRecommendSongs = $this->song->handleGetRecommendSong();
+            $album = $this->album->findAlbumByUserId($user->id);
+            $listSongsMyAlbumHash = $this->album->getListSongsMyAlbumHash($album->id);
+        }
+
+        return view('client.track')->with(compact('categories','listSongs', 'listRecommendSongs', 'listSongsMyAlbumHash'));
     }
 }

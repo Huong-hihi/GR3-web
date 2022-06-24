@@ -147,9 +147,10 @@ html, body {
     margin: 0;
     padding: 18px 10px;
     background-color: #21324a;
+    border-bottom: rgba(255, 255, 255, 0.03) solid 1px;
 }
 
-#plList li:nth-child(n+2):hover {
+#plList li:nth-child(n+1):hover {
     background-color: rgba(0, 0, 0, .1);
 }
 
@@ -372,6 +373,7 @@ html, body {
 #list-songs-wrapper {
     margin-left: 50px;
     width: 25%;
+    max-width: 300px;
 }
 
 .recommend-list-songs-wrapper {
@@ -432,7 +434,6 @@ html, body {
 
 }
 
-/*#5ad8eb*/
 #list-songs-wrapper .recommend-song-name:hover {
     color: #5ad8eb;
 }
@@ -477,10 +478,50 @@ html, body {
     height: 35px;
 }
 
-.play-pause {
-    transform: translateY(-4px);
+.plyr__control .icon--not-pressed {
+    width: 20px;
+    height: 20px;
+}
+
+.plyr__controls__item  .play-pause {
+    width: 24px;
+    height: 24px;
+    padding: 4px;
 }
 
 .song-download {
     /*margin-left: auto;*/
+}
+
+.btn-pre-next {
+    width: 24px;
+    height: 24px;
+    padding: 5px;
+}
+
+.group-controls-playlist .group-track-action {
+    position: absolute;
+    display: flex;
+    right: 15px;
+    justify-content: space-between;
+}
+
+.group-controls-playlist .group-track-action i{
+    transform: scale(1.5);
+
+}
+
+.group-controls-playlist .group-track-action .item {
+    cursor: pointer;
+    padding: 3px 9px;
+    margin-right: 5px;
+    border-radius: 3px;
+}
+
+.group-controls-playlist .group-track-action .item:hover {
+    background: #00b3ff;
+}
+
+.group-controls-playlist .group-track-action .item:hover :before {
+    color: #fff;
 }

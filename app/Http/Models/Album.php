@@ -5,6 +5,7 @@ namespace App\Http\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class Album extends Model
 {
@@ -40,11 +41,30 @@ class Album extends Model
         $data = $request->only('user_id', 'name');
         if (!$request->name) $data['name'] = config('common.text.album-name-default');
 
-        return Album::create($request);
+        return Album::create($data);
+    }
+
+    public static function findAlbum($id)
+    {
+        return Album::find($id);
     }
 
     public static function findAlbumByUserId($userId)
     {
-        return Album::find('user_id', $userId);
+        return Album::where('user_id', $userId)->first();
+    }
+
+    public static function getListSongsMyAlbumHash($albumId): array
+    {
+        $songsHash = [];
+        $songs = DB::table('album_song')
+            ->where('album_id', $albumId)
+            ->pluck('song_id');
+
+        foreach ($songs as $key => $song) {
+            $songsHash[$song] = $key;
+        }
+
+        return $songsHash;
     }
 }

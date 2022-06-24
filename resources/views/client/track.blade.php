@@ -95,14 +95,15 @@
 
                     </ul>
                 </div>
+                @if(count($listRecommendSongs) > 0)
                 <div class="recommend-list-songs-wrapper">
                     <div class="recommend-inner">
                         <h3>Có thể bạn thích nghe</h3>
                         <div class="recommend-list-songs">
                             <div class="inner">
                                 <ul>
-                                    @foreach($listRecomendSongs as $song)
-                                    
+                                    @foreach($listRecommendSongs as $song)
+
                                         <li>
                                             <a href="{{ route('client.song.detail', ['id'=> $song->id])}}">
                                             <div class="recommend-song">
@@ -118,9 +119,9 @@
                                                     {{--                                                <i class='bx bx-list-check' ></i>--}}
                                                 </div>
                                             </div>
-                                        </a> 
+                                        </a>
                                         </li>
-                                                                  
+
                                     @endforeach
                                 </ul>
 
@@ -128,9 +129,8 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
-
-
         </div>
     </div>
 @endsection
@@ -177,12 +177,13 @@
                 }
             })
 
-            $(document).on('click', '.plAddTrack', function (e) {
+            $(document).on('click', '.recommend-add-image', function (e) {
                 e.preventDefault();
                 if (!userId) {
                     window.location.href = '{{ route('login') }}';
                 } else {
-                    let songIdCurrent = $(this).parent().attr('data-song-id')
+                    let songIdCurrent = $('#plList').attr('data-song-id-current');
+                    console.log(songIdCurrent)
                     $.ajax({
                         url: '{{ route('client.my-album.update') }}',
                         method: "POST",
@@ -190,12 +191,13 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         data: {
-                            song_id: songIdCurrent,
+                            song_id: '' + songIdCurrent,
                             action: 'create'
                         },
                         success: function (data, textStatus, xhr) {
                             if (xhr.status === 200) {
-                                console.log(xhr)
+                                $('.recommend-add-image').hide();
+                                $('.recommend-added-image').show();
                             }
                         },
                         error: function (e) {
@@ -204,6 +206,7 @@
                     })
                 }
             })
+
         })
     </script>
 @endsection

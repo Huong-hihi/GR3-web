@@ -50,6 +50,7 @@ class Song extends Model
 
     public static function handleGetRecommendSong()
     {
+        return [];
         $user = Auth::user();
         if (!$user) return [];
 
