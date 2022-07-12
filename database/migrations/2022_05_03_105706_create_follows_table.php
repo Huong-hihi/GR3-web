@@ -18,7 +18,6 @@ class CreateFollowsTable extends Migration
             $table->integer('user_id');
             $table->integer('singer_id');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

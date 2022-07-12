@@ -525,3 +525,256 @@ html, body {
 .group-controls-playlist .group-track-action .item:hover :before {
     color: #fff;
 }
+
+.pointer-event-none {
+    pointer-events: none;
+}
+
+.cover-bottom {
+    position: absolute;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(23,23,37,0.65) 70%, rgba(0,0,0,0.85) 100%);
+}
+
+.song-singer-name {
+    cursor: pointer;
+    margin-left: 4px;
+    transform: translateY(-11px);
+    display: inline-block;
+    color: #82978f;
+}
+
+.song-singer-name:hover {
+    color: #5ad8eb;
+}
+
+.song-singer-name:hover .movie-item-content {
+    color: #fff;
+}
+
+#page-singer .section-inner {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}
+
+#singer-box-head .singer-information {
+    display: inline-block;
+    max-width: 60%;
+    min-height: 410px;
+}
+
+#singer-box-head .singer-name {
+    font-size: 50px;
+}
+
+#singer-box-head .singer-box-right .singer-avatar{
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#singer-box-head .singer-box-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#singer-box-head .singer-box-right .action {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+#singer-box-head .singer-box-right .action-btn {
+    padding: 8px 20px;
+    background-color: #829799;
+    margin: 10px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+#singer-box-head .singer-box-right .action-btn:hover {
+    background-color: #5ad8eb;
+}
+
+#singer-list-songs .item {
+    width: unset;
+}
+
+.w-80p {
+    width: 80%;
+}
+
+.main-ranking {
+    min-width: 300px;
+}
+
+.main-ranking .inner {
+    margin-top: 4rem;
+}
+
+.main-ranking .ranking-header {
+    font-size: 24px;
+    text-transform: uppercase;
+}
+
+.ranking-list {
+    cursor: context-menu;
+}
+
+.ranking-list .song-image, .ranking-list .song-info {
+    cursor: pointer;
+}
+
+.ranking-list .item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-weight: 600;
+}
+
+.ranking-list .item:nth-child(1) .rank-number, .ranking-list .item:nth-child(1) .song-wrap-content {
+    color: #ffd500;
+    font-size: 30px;
+}
+.ranking-list .item:nth-child(1) .border-bottom {
+    background-color: #ffd500;
+}
+
+.ranking-list .item:nth-child(2) .rank-number, .ranking-list .item:nth-child(2) .song-wrap-content {
+    color: silver;
+    font-size: 26px;
+}
+
+.ranking-list .item:nth-child(2) .border-bottom {
+    background-color: silver;
+}
+
+.ranking-list .item:nth-child(3) .rank-number, .ranking-list .item:nth-child(3) .song-wrap-content {
+    color: #8a4c36;
+    font-size: 22px;
+}
+
+.ranking-list .item:nth-child(3) .border-bottom {
+    background-color: #8a4c36;
+}
+
+.ranking-list .border-bottom {
+    width: 24px;
+    height: 4px;
+    background-color: #ccc;
+    border-radius: 2px;
+}
+
+.ranking-list .song-info {
+    margin-left: 5px;
+    font-size: 13px;
+    width: 70%;
+}
+
+.ranking-list .rank-number {
+    display: flex;
+    flex-direction: column;
+    font-size: 19px;
+    transform: translateY(-10px);
+}
+
+.ranking-list .song-image {
+    background-repeat: no-repeat;
+    width: 45px;
+    height: 45px;
+    background-size: contain;
+    border-radius: 8px;
+}
+
+.ranking-list span.number {
+    text-align: center;
+}
+
+.ranking-list .singer-name {
+    color: #829799;
+}
+
+.ranking-list .singer-name:hover {
+    color: #5AD8EB;
+}
+
+.ranking-list .song-name {
+    font-size: 16px;
+    display: inline-block;
+    width: 160px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+.ranking-list .song-name:hover {
+    color: #5AD8EB;
+}
+
+.ranking-list .song-wrap-content {
+    border-bottom: #303b4a solid 1px;
+    justify-content: left;
+    width: 100%;
+    display: flex;
+    align-items: end;
+    padding-bottom: 16px;
+    margin-left: 20px;
+}
+
+.ranking-list .rank-1.item {
+    position: relative;
+}
+
+.ranking-list .rank-1 .rank-number {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    z-index: 1000;
+}
+
+.ranking-list .rank-1 .number {
+    font-size: 46px;
+}
+
+.ranking-list .rank-1 .border-bottom {
+    display: none;
+}
+
+.ranking-list .rank-1 .song-wrap-content {
+    margin: 0;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 999;
+}
+
+.ranking-list .rank-1 .song-image {
+    width: 140px;
+    height: 140px;
+    position: relative;
+}
+
+.ranking-list .rank-1 .song-info {
+    width: 45%;
+}
+
+.ranking-list .rank-1 .back-blade {
+    display: block !important;
+    position: absolute;
+    border-radius: 7px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(23,23,37,0.65) 70%, rgba(0,0,0,0.85) 100%);
+}
+

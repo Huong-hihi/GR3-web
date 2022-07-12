@@ -37,11 +37,11 @@
 </head>
 <body>
 
-    <div class="progress-bar" id="progress-bar">
-        <a href="#" id="progress-val">
-            <ion-icon name="logo-foursquare"></ion-icon>
-        </a>
-    </div>
+{{--    <div class="progress-bar" id="progress-bar">--}}
+{{--        <a href="#" id="progress-val">--}}
+{{--            <ion-icon name="logo-foursquare"></ion-icon>--}}
+{{--        </a>--}}
+{{--    </div>--}}
 
     <div class="container">
         <div class="nav bg-color">
@@ -102,7 +102,7 @@
                         <div class="movie-cast-item">
                             <img src="assets/img/Images/anhhieuemma.jpg" alt="cast1">
                         </div>
-                       
+
                     </div>
                 </div>
             </div>

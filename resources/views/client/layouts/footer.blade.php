@@ -3,7 +3,7 @@
         <div class="row ">
             <div class="col-6 footer-header">
                 <a href="#" class="logo">
-                    <i style="margin-right: 10px;" class='bx bx-movie-play bx-tada main-color'></i>Mp<span class="main-color">3</span>x
+                    <i style="margin-right: 10px;" class='bx bx-movie-play bx-tada main-color'></i>Mu<span class="main-color">sic</span>x
                 </a>
 
                 <p class="description">

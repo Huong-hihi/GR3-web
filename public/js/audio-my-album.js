@@ -79,9 +79,6 @@ jQuery(function ($) {
                             <span class="plyr__sr-only">Download</span>
                         </a>
                     </div>
-                    <div class="item">
-                        <i class="bx bxs-plus-square recommend-add-image" id="add-song-to-playlist"></i>
-                    </div>
                 </div>
             </div>`;
 
@@ -157,15 +154,8 @@ jQuery(function ($) {
                 npTitle.text(songCurrent.find('.plTitle').text());
                 audio.src = window.location.protocol + "//" + window.location.host + '/' + songCurrent.attr('data-song-url');
                 $('.lyric-content').html(songCurrent.attr('data-song-lyric'));
-
-                let songInformation = JSON.parse(self.attr('data-song-information')) ?? {};
-                changeAddTrackIcon(songInformation['inMyAlbum'] ? 'added' : 'add');
-                songInformation['inMyAlbum'] = true;
-                self.attr('data-song-information', JSON.stringify(songInformation));
-
                 let dataPageTrack = JSON.parse($('#page-track').attr('data-page-track'));
                 callAjax(dataPageTrack['listenSongURL'],'POST',{song_id: songId});
-
 
                 updateDownload(id, audio.src);
             }, updateDownload = function (id, source) {

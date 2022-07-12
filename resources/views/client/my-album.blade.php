@@ -106,48 +106,13 @@
 
                     </ul>
                 </div>
-                @if(count($listRecommendSongs) > 0)
-                <div class="recommend-list-songs-wrapper">
-                    <div class="recommend-inner">
-                        <h3>Có thể bạn thích nghe</h3>
-                        <div class="recommend-list-songs">
-                            <div class="inner">
-                                <ul>
-                                    @foreach($listRecommendSongs as $song)
-
-                                        <li class="track-item" data="{{ json_encode() }}">
-                                            <a href="{{ route('client.song.detail', ['id'=> $song->id])}}">
-                                            <div class="recommend-song">
-                                                <div class="recommend-song-image">
-                                                    <img src="{{ $song->image }}" alt="">
-                                                </div>
-                                                <div class="recommend-infomation">
-                                                    <span href="" class="recommend-song-name">{{ $song->name }}</span>
-                                                    <span href="" class="recommend-singer">{{ $song->singer }}</span>
-                                                </div>
-                                                <div class="recommend-add-btn">
-                                                    <i class='bx bx-plus-circle recommend-add-image'></i>
-                                                    {{--                                                <i class='bx bx-list-check' ></i>--}}
-                                                </div>
-                                            </div>
-                                            </a>
-                                        </li>
-
-                                    @endforeach
-                                </ul>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endif
             </div>
         </div>
     </div>
 @endsection
 
 @section('script')
-    <script src="{{ asset('js/audio.js') }}"></script>
+    <script src="{{ asset('js/audio-my-album.js') }}"></script>
     <script>
         $(function () {
             let backGroundImage = '{{ $listSongs[0]->image }}';
@@ -187,40 +152,6 @@
                     })
                 }
             })
-
-            $(document).on('click', '.recommend-add-image', function (e) {
-                e.preventDefault();
-                if (!userId) {
-                    window.location.href = '{{ route('login') }}';
-                } else {
-                    let songIdCurrent = $('#plList').attr('data-song-id-current');
-                    changeAddTrackIcon('added');
-                    $.ajax({
-                        url: '{{ route('client.my-album.update') }}',
-                        method: "POST",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: {
-                            song_id: '' + songIdCurrent,
-                            action: 'create'
-                        },
-                        success: function (data, textStatus, xhr) {
-                            if (xhr.status === 200) {
-                                changeAddTrackIcon('added')
-                            }
-                        },
-                        error: function (e) {
-                            changeAddTrackIcon('add');
-                        }
-                    })
-                }
-            })
-
-            $('#plList').on('click', function() {
-                let data = $(this).data('data-track');
-            });
-
         })
     </script>
 @endsection

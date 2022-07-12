@@ -44,9 +44,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function user()
+    public function singer()
     {
         return $this->HasOne('App\Http\Models\Singer');
+    }
+
+    public function album()
+    {
+        if ($this->role == $this::ROLE_ADMIN) return $this->hasMany(Album::class);
+
+        return $this->HasOne(Album::class, 'user_id', 'id');
     }
 
     public static function find($id)

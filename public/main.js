@@ -115,17 +115,17 @@ loop();
 
 // PROGRESS BAR
 
-let scrollPrecentage = () => {
-    let scrollProgress = document.getElementById('progress-bar')
-    let progressVal = document.getElementById("progress-val")
-    let pos = document.documentElement.scrollTop
-    let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
-    let scrollVal = Math.round(pos * 100 / calcHeight)
-    scrollProgress.style.background = `conic-gradient(#5ad8eb ${scrollVal}%, #2b2f38 ${scrollVal}%)`
-}
-
-window.onscroll = scrollPrecentage
-window.onload = scrollPrecentage
+// let scrollPrecentage = () => {
+//     let scrollProgress = document.getElementById('progress-bar')
+//     let progressVal = document.getElementById("progress-val")
+//     let pos = document.documentElement.scrollTop
+//     let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+//     let scrollVal = Math.round(pos * 100 / calcHeight)
+//     scrollProgress.style.background = `conic-gradient(#5ad8eb ${scrollVal}%, #2b2f38 ${scrollVal}%)`
+// }
+//
+// window.onscroll = scrollPrecentage
+// window.onload = scrollPrecentage
 
 
 //   MOBILE NAV

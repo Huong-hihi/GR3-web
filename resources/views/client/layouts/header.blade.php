@@ -3,8 +3,8 @@
         <a href="{{ route('home') }}" class="logo">
             <i style="margin-right: 10px;" class='bx bx-movie-play bx-tada main-color'></i>Mu<span class="main-color">sic</span>x
         </a>
-        <form action="" class="search-box">
-            <input type="text" name="search" placeholder="Search Your Music ....." class="nav-search">
+        <form action="{{ route('home.search') }}" class="search-box">
+            <input type="text" name="q" placeholder="Search Your Music ....." class="nav-search" value="{{ $search['q'] ?? '' }}">
             <button type="password">
                 <i class='bx bx-search-alt'></i>
             </button>
@@ -46,12 +46,20 @@
                     Home
                 </a>
             </li>
+            <li class="nav-item active">
+                <a href="{{ $userNav ? route('client.album.my-album') : route('login') }}">
+                    {{--                <span class="nav-icon">--}}
+                    {{--                    <ion-icon name="home-outline"></ion-icon>--}}
+                    {{--                </span>--}}
+                    My Album
+                </a>
+            </li>
             <li class="nav-item">
                 <a href="{{ route('home') . '#trending' }}">
 {{--                <span class="nav-icon">--}}
 {{--                    <ion-icon name="film-outline"></ion-icon>--}}
 {{--                </span>--}}
-                    Album
+                    Trending
                 </a>
             </li>
             <li class="nav-item">

@@ -6,6 +6,7 @@ use App\Traits\File;
 use App\Http\Models\Song;
 use App\Http\Models\Album;
 use App\Http\Models\Category;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
@@ -21,7 +22,11 @@ class SongController extends Controller
     private $album;
 
 
-    public function __construct(Song $song, Category $category, Album $album)
+    public function __construct
+    (
+        Song $song,
+        Category $category,
+        Album $album)
     {
         $this->song = $song;
         $this->category = $category;
@@ -44,7 +49,7 @@ class SongController extends Controller
         if ($user) {
             $listRecommendSongs = $this->song->handleGetRecommendSong();
             $album = $this->album->findAlbumByUserId($user->id);
-            $listSongsMyAlbumHash = $this->album->getListSongsMyAlbumHash($album->id);
+            $listSongsMyAlbumHash = $album ? $this->album->getListSongsMyAlbumHash($album->id) : [];
         }
 
         return view('client.track')->with(compact('categories','listSongs', 'listRecommendSongs', 'listSongsMyAlbumHash'));

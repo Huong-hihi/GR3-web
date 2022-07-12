@@ -20,15 +20,17 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="cover-bottom">
 
         </div>
         <ul class="slide-control">
             <li class="slide-prev">
-                <ion-icon name="chevron-back-outline"></ion-icon>
+                <i class='bx bx-chevron-left' ></i>
             </li>
 
             <li class="slide-next">
-                <ion-icon name="chevron-forward-outline"></ion-icon>
+                <i class='bx bx-chevron-right' ></i>
             </li>
         </ul>
 

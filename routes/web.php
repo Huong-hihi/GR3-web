@@ -59,13 +59,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function () {
 
 Route::group(['namespace' => 'Client'], function () {
     Route::get('', 'HomeController@index')->name('home');
+    Route::get('search', 'HomeController@search')->name('home.search');
+    Route::post('song/listen', 'ListenController@listen')->name('client.song.listen');
     Route::get('song/{id}', 'SongController@detail')->name('client.song.detail');
     Route::get('singer/{id}', 'SingerController@detail')->name('client.singer.detail');
+    Route::get('singer/{id}/album', 'SingerController@album')->name('client.singer.album');
     Route::get('album/{id}', 'AlbumController@detail')->name('client.album.detail');
+    Route::get('my-album', 'AlbumController@myAlbum')->name('client.album.my-album');
     Route::get('profile', 'ProfileController@index')->name('client.profile.index');
     Route::put('profile', 'ProfileController@update')->name('client.profile.update');
     Route::post('rating/log/{song_id}', 'RatingController@log')->name('client.rating.log');
-    Route::get('my-album', 'AlbumController@myAlbumIndex')->name('client.my-album.index');
     Route::post('my-album/update', 'AlbumController@myAlbumUpdate')->name('client.my-album.update');
 
 });

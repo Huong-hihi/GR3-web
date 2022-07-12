@@ -18,7 +18,6 @@ class CreateSingerSongsTable extends Migration
             $table->integer('singer_id');
             $table->integer('song_id');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

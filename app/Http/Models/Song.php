@@ -48,6 +48,11 @@ class Song extends Model
         return Song::with('category')->get();
     }
 
+    public function singer()
+    {
+        return $this->belongsTo(Singer::class, 'musician', 'name');
+    }
+
     public static function handleGetRecommendSong()
     {
         return [];
@@ -76,6 +81,11 @@ class Song extends Model
         return $this->belongsToMany(Album::class, 'album_song');
     }
 
+    public function listen_logs()
+    {
+        return $this->hasMany(ListenLog::class);
+    }
+
     public function ratings()
     {
         $user = Auth::user();
@@ -86,5 +96,12 @@ class Song extends Model
             ->when(!$user, function ($q) {
             $q->where('user_id', 0);
         });
+    }
+
+    public static function search ($q)
+    {
+        return Song::where('name', 'like', '%' . $q . '%')
+            ->orWhere('musician', 'like', '%' . $q . '%')
+            ->get();
     }
 }

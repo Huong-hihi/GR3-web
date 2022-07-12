@@ -33,6 +33,7 @@ body {
     padding-top: var(--nav-height);
     min-height: 100vh;
     scroll-behavior: smooth;
+    font-weight: 600;
 }
 
 a {
@@ -50,10 +51,15 @@ img {
     object-fit: cover;
 }
 
-
 .main-color {
     color: var(--main-color);
 }
+
+.container-main {
+    display: flex;
+    justify-content: space-between;
+}
+
 
 .overlay {
     position: fixed;
@@ -106,6 +112,7 @@ img {
     margin: 10px;
     width: 22%;
     max-width: 200px;
+    font-weight: 600;
 }
 
 .items .item:hover {
@@ -162,6 +169,10 @@ object-fit: contain;
 position: relative;
 }
 
+.item .image-thumbnail img{
+    border-radius: 6px;
+}
+
 .fluid {
 max-width: 1200px;
 margin: 0 auto;
@@ -185,6 +196,7 @@ margin: 0 auto;
     display: flex;
     justify-content: left;
     padding: 10px;
+    font-weight: 600;
 }
 
 .nav-container .nav-item {
@@ -707,7 +719,7 @@ width: 100%;
 
 .section-wrapper {
     left: 220px;
-    width: calc(100% - 310px);
+    width: calc(100% - 50px);
     transition: all .4s ease-in-out;
 }
 

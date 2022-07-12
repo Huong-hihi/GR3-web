@@ -16,6 +16,7 @@ class CreateSingersTable extends Migration
         Schema::create('singers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
+            $table->string('name');
             $table->string('full_name');
             $table->string('nickname')->nullable();
             $table->string('nation')->nullable();

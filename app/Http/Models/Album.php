@@ -33,7 +33,9 @@ class Album extends Model
 
     public static function getAlbumHasWith()
     {
-        return Album::with('songs')->paginate(3);
+        $userAdmin = User::where('role', 1)->first();
+
+        return Album::where('user_id', $userAdmin->id)->with('songs')->paginate(3);
     }
 
     public static function createAlbum($request)

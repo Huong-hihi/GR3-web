@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Models\Album;
-use App\Http\Models\AlbumSong;
 use App\Http\Models\Category;
 use App\Http\Models\Song;
-use App\Traits\File;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\Support\Renderable;
@@ -53,11 +51,11 @@ class AlbumController extends Controller
      * @param $id
      * @return Renderable
      */
-    public function detail($id)
+    public function detail(Request $request, $id)
     {
         $user = Auth::user();
         $categories = $this->category::orderBy('id','DESC')->get();
-        $album = $this->album::findOrFail($id)->with(['songs' => function($q) use ($user){
+        $album = $this->album::where('id', $id)->with(['songs' => function($q) use ($user){
             if ($user) $q->with('ratings');
         }])->first();
         $listSongs = $album->songs;
@@ -66,10 +64,27 @@ class AlbumController extends Controller
 
         if ($user) {
             $listRecommendSongs = $this->song->handleGetRecommendSong();
-            $listSongsMyAlbumHash = $this->album->getListSongsMyAlbumHash($album->id);
+            $listSongsMyAlbumHash = $this->album->getListSongsMyAlbumHash($user->album ? $user->album->id : null);
         }
 
         return view('client.track')->with(compact('categories','listSongs', 'listRecommendSongs', 'listSongsMyAlbumHash'));
+    }
+
+    public function myAlbum()
+    {
+        $user = Auth::user();
+        $categories = $this->category::orderBy('id','DESC')->get();
+        $album = $this->album::where('user_id', $user->id)->with(['songs' => function($q) use ($user){
+            if ($user) $q->with('ratings');
+        }])->first();
+        $listSongs = $album->songs;
+        $listSongsMyAlbumHash = [];
+
+        if ($user) {
+            $listSongsMyAlbumHash = $this->album->getListSongsMyAlbumHash($user->album ? $user->album->id : null);
+        }
+
+        return view('client.my-album')->with(compact('categories','listSongs', 'listSongsMyAlbumHash'));
     }
 
     /**

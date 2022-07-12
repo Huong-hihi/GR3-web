@@ -31,9 +31,14 @@ class Singer extends Model
         return $this->belongsTo('App\Http\Models\User');
     }
 
-    public static function find($id)
+    public function songs()
     {
-        return User::findOrFail($id);
+        return $this->hasMany(Song::class, 'musician', 'name');
+    }
+
+    public static function find($id, $with)
+    {
+        return Singer::where('id', $id)->with($with)->first();
     }
 
     public static function findByUserID($userID)
