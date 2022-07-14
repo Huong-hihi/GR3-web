@@ -171,6 +171,7 @@ position: relative;
 
 .item .image-thumbnail img{
     border-radius: 6px;
+    object-fit: revert;
 }
 
 .fluid {

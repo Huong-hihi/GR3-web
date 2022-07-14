@@ -163,7 +163,6 @@ jQuery(function ($) {
                 songInformation['inMyAlbum'] = true;
                 self.attr('data-song-information', JSON.stringify(songInformation));
 
-                let dataPageTrack = JSON.parse($('#page-track').attr('data-page-track'));
                 callAjax(dataPageTrack['listenSongURL'],'POST',{song_id: songId});
 
 

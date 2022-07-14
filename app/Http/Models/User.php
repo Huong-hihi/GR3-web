@@ -73,6 +73,8 @@ class User extends Authenticatable
 
     public function getAvatarAttribute($value)
     {
+        if (strpos($value, 'http') !== false) return $value;
+
         return $value ? cxl_asset('images/avatar/' . $value) : null;
     }
 

@@ -31,6 +31,11 @@ class Album extends Model
         return $this->belongsToMany(Song::class, 'album_song');
     }
 
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
     public static function getAlbumHasWith()
     {
         $userAdmin = User::where('role', 1)->first();

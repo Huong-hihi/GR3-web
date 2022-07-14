@@ -66,6 +66,8 @@ class Singer extends Model
 
     public function getImageAttribute($attr): string
     {
+        if (strpos($attr, 'http') !== false) return $attr;
+
         return 'images/singer/' . $attr;
     }
 }

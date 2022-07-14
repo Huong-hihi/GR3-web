@@ -53,6 +53,11 @@ class Song extends Model
         return $this->belongsTo(Singer::class, 'musician', 'name');
     }
 
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
     public static function handleGetRecommendSong()
     {
         return [];
@@ -68,11 +73,15 @@ class Song extends Model
 
     public function getFileMp3Attribute($attr): string
     {
+        if (strpos($attr, 'http') !== false) return $attr;
+
         return 'audios/song/' . $attr;
     }
 
     public function getImageAttribute($attr): string
     {
+        if (strpos($attr, 'http') !== false) return $attr;
+
         return '/images/song/' . $attr;
     }
 
@@ -102,6 +111,7 @@ class Song extends Model
     {
         return Song::where('name', 'like', '%' . $q . '%')
             ->orWhere('musician', 'like', '%' . $q . '%')
+            ->with('singer')
             ->get();
     }
 }

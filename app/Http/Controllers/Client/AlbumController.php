@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Models\Album;
 use App\Http\Models\Category;
+use App\Http\Models\Comment;
 use App\Http\Models\Song;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -55,10 +56,18 @@ class AlbumController extends Controller
     {
         $user = Auth::user();
         $categories = $this->category::orderBy('id','DESC')->get();
-        $album = $this->album::where('id', $id)->with(['songs' => function($q) use ($user){
-            if ($user) $q->with('ratings');
-        }])->first();
+        $album = $this->album::where('id', $id)
+            ->with([
+                'songs' => function($q) use ($user) {
+                    if ($user) $q->with('ratings');
+                },
+                'comments' => function($q) use ($user) {
+                    $q->with('user', 'parent')
+                        ->orderBy('created_at', 'DESC');
+                },
+            ])->first();
         $listSongs = $album->songs;
+        $listComments = $album->comments;
         $listRecommendSongs = [];
         $listSongsMyAlbumHash = [];
 
@@ -67,7 +76,7 @@ class AlbumController extends Controller
             $listSongsMyAlbumHash = $this->album->getListSongsMyAlbumHash($user->album ? $user->album->id : null);
         }
 
-        return view('client.track')->with(compact('categories','listSongs', 'listRecommendSongs', 'listSongsMyAlbumHash'));
+        return view('client.track')->with(compact('categories','listSongs', 'listRecommendSongs', 'listSongsMyAlbumHash', 'listComments'));
     }
 
     public function myAlbum()

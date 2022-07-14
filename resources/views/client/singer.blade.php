@@ -16,6 +16,8 @@
                     <b>Quốc gia:</b> {{ $singer->nation }}
                     <b>Giải thưởng:</b>
                     {{ $singer->prize }}
+                    <b>Thông tin thêm:</b>
+                    {{ $singer->information }}
                 </span>
                 </div>
             </div>

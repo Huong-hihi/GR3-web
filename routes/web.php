@@ -70,5 +70,7 @@ Route::group(['namespace' => 'Client'], function () {
     Route::put('profile', 'ProfileController@update')->name('client.profile.update');
     Route::post('rating/log/{song_id}', 'RatingController@log')->name('client.rating.log');
     Route::post('my-album/update', 'AlbumController@myAlbumUpdate')->name('client.my-album.update');
-
+    Route::group(['prefix' => 'api'], function () {
+        Route::post('comment/create', 'CommentController@apiCreate')->name('api.comment.create');
+    });
 });

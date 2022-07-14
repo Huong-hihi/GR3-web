@@ -3,7 +3,10 @@
 @section('content')
     <?php
         $data = [
-            'listenSongURL' => route('client.song.listen')
+            'listenSongURL' => route('client.song.listen'),
+            'routeName' => \Request::route()->getName(),
+            'apiCommentCreate' => route('api.comment.create'),
+            'parameters' => \Route::current()->parameters
         ];
     ?>
     <div class="section-tv" id="page-track" data-page-track="{{ json_encode($data) }}">
@@ -144,9 +147,48 @@
             </div>
         </div>
     </div>
+
+    <div class="section-tv">
+        <div class="comment-wrapper">
+            <div class="comment-form">
+                <textarea id="textarea"
+                     tabindex="0"
+                     style="white-space: pre"
+                     data-text="Bạn có bình luận gì về bài hát này?" role="textbox" aria-multiline="true" spellcheck="false"></textarea>
+                <div class="comment-note">
+                    Nhấn shift + enter để gửi
+                </div>
+            </div>
+            <div class="comment-list-wrapper">
+                <ul>
+                    @foreach($listComments as $comment)
+                    <li>
+                        <div class="inner">
+                            <div class="comment-user-info">
+                                <div class="comment-user-avatar" style="background-image: url('{{ $comment->user->avatar ?? asset('images/default-user-image.png') }}')"></div>
+                                <span class="comment-user-name">{{ $comment->user->name }}</span>
+                                <span class="comment-user-publish-time">{{ $comment->created_at }}</span>
+                            </div>
+                            <div class="comment-user-body">
+                                {!! nl2br($comment->content) !!}
+                            </div>
+                            <span class="comment-reply">Reply</span>
+                        </div>
+                    </li>
+                    @endforeach
+                </ul>
+
+            </div>
+        </div>
+
+    </div>
+
 @endsection
 
 @section('script')
+    <script>
+        var dataPageTrack = JSON.parse($('#page-track').attr('data-page-track'));
+    </script>
     <script src="{{ asset('js/audio.js') }}"></script>
     <script>
         $(function () {
@@ -219,6 +261,48 @@
 
             $('#plList').on('click', function() {
                 let data = $(this).data('data-track');
+            });
+
+            $("#textarea").keypress(function(event) {
+                if (event.keyCode === 13 && event.shiftKey) {
+                    let self = $(this);
+                    let content = self.val();
+                    let url = dataPageTrack['apiCommentCreate'];
+                    let data = {
+                        content: content,
+                        commentable_id: null,
+                        commentable_type: null,
+
+                    }
+
+                    if(dataPageTrack['routeName'] === 'client.album.detail') {
+                        data['commentable_id'] = dataPageTrack['parameters']['id'];
+                        data['commentable_type'] = 'album';
+                    }
+
+                    if(dataPageTrack['routeName'] === 'client.song.detail') {
+                        data['commentable_id'] = dataPageTrack['parameters']['id'];
+                        data['commentable_type'] = 'song';
+                    }
+
+                    let result = callAjax(url, 'POST', data);
+                    console.log(result);
+                    let template = `
+                    <li>
+                        <div class="inner">
+                            <div class="comment-user-info">
+                                <div class="comment-user-avatar" style="background-image: url('{{ $comment->user->avatar ?? asset('images/default-user-image.png') }}')"></div>
+                                <span class="comment-user-name">{{ $comment->user->name }}</span>
+                                <span class="comment-user-publish-time">{{ $comment->created_at }}</span>
+                            </div>
+                            <div class="comment-user-body">
+                                {!! nl2br($comment->content) !!}
+                            </div>
+                                    <span class="comment-reply">Reply</span>
+                        </div>
+                    </li>
+                    `
+                }
             });
 
         })

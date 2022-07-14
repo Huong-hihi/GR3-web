@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Http\Models\Album;
+use App\Http\Models\Comment;
+use App\Http\Models\Song;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Relation::morphMap([
+            'song' => Song::class,
+            'album' => Album::class,
+            'comment' => Comment::class,
+        ]);
     }
 }
