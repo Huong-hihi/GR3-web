@@ -17,6 +17,7 @@ class CreateSongsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('category_id');
             $table->string('name');
+            $table->string('singer_name')->nullable();
             $table->string('musician')->nullable();
             $table->string('url')->nullable();
             $table->string('file_mp3')->nullable();

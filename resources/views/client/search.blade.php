@@ -27,7 +27,7 @@
                                 </div>
                             </a>
                             <a href="{{ $song->singer ? route('client.singer.detail', ['id' => $song->singer->id]) : '#' }}">
-                                <span class="song-singer-name">{{ $song->musician }}</span>
+                                <span class="song-singer-name">{{ $song->singer_name }}</span>
                             </a>
                         </div>
                     @endforeach

@@ -59,7 +59,7 @@
                                         </div>
                                     </a>
                                     <a href="{{ $song->singer ? route('client.singer.detail', ['id' => $song->singer->id]) : '#' }}">
-                                        <span class="song-singer-name">{{ $song->musician }}</span>
+                                        <span class="song-singer-name">{{ $song->singer_name }}</span>
                                     </a>
                                 </div>
                             @endforeach
@@ -126,7 +126,7 @@
                                             </a>
                                             <a class="singer-name"
                                                href="{{ $rank->song->singer ? route('client.singer.detail', ['id' => $rank->song->singer->id]) : '#' }}">
-                                                {{ $rank->song->musician }}
+                                                {{ $rank->song->singer_name }}
                                             </a>
                                         </div>
                                     </div>

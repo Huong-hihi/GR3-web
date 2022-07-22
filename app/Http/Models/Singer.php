@@ -33,7 +33,7 @@ class Singer extends Model
 
     public function songs()
     {
-        return $this->hasMany(Song::class, 'musician', 'name');
+        return $this->hasMany(Song::class, 'singer_name', 'name');
     }
 
     public static function find($id, $with)

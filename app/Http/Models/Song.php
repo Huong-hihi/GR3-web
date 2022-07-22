@@ -20,7 +20,7 @@ class Song extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'category_id', 'musician', 'url', 'file_mp3', 'lyric','image', 'created_at', 'updated_at', 'deleted_at'
+        'name', 'category_id', 'singer_name', 'musician', 'url', 'file_mp3', 'lyric','image', 'created_at', 'updated_at', 'deleted_at'
     ];
 
     public static function store($data)
@@ -50,7 +50,7 @@ class Song extends Model
 
     public function singer()
     {
-        return $this->belongsTo(Singer::class, 'musician', 'name');
+        return $this->belongsTo(Singer::class, 'singer_name', 'name');
     }
 
     public function comments()
@@ -110,7 +110,7 @@ class Song extends Model
     public static function search ($q)
     {
         return Song::where('name', 'like', '%' . $q . '%')
-            ->orWhere('musician', 'like', '%' . $q . '%')
+            ->orWhere('singer_name', 'like', '%' . $q . '%')
             ->with('singer')
             ->get();
     }

@@ -49,7 +49,7 @@ class SingerController extends Controller
         $user = Auth::user();
         $categories = $this->category::orderBy('id','DESC')->get();
 
-        $listSongs = Song::where('musician', $singer->name)
+        $listSongs = Song::where('singer_name', $singer->name)
             ->when($user, function($q) use ($user){
                 $q->with('ratings');
             })
