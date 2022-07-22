@@ -895,3 +895,13 @@ html, body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.my-album-btn-remove-song {
+    margin-left: 5px;
+    min-width: 20px;
+    cursor: pointer;
+}
+
+.my-album-btn-remove-song i:hover{
+    color: #5ad8eb;
+}

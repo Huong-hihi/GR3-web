@@ -6,6 +6,7 @@
             'listenSongURL' => route('client.song.listen')
         ];
     ?>
+    @if(count($listSongs) > 0)
     <div class="section-tv" id="page-track" data-page-track="{{ json_encode($data) }}">
         <div class="section-inner">
             <div class="title">
@@ -59,6 +60,14 @@
                 </div>
                 <div class="audio-description">
                     <div class="lyric">
+                        <h3>Ca sĩ: </h3>
+                        <span class="singer-name">
+                            {!! nl2br($listSongs[0]->singer_name) !!}
+                        </span>
+                        <h3>Nhạc sĩ: </h3>
+                        <span class="musician">
+                            {!! nl2br($listSongs[0]->musician) !!}
+                        </span>
                         <h3>Lyric: </h3>
                         <span class="lyric-content">
                             {!! nl2br($listSongs[0]->lyric) !!}
@@ -89,7 +98,6 @@
                                     data-playlist-song-index="{{ $loop->index }}"
                                     data-song-url="{{ $item->file_mp3 }}"
                                     data-song-id="{{ $item->id }}"
-                                    data-song-lyric="{!! nl2br($item->lyric) !!}"
                                     data-song-rating-score='{{ isset($item->ratings[0]) ? $item->ratings[0]->score : '0' }}'
                                 >
                                     <div class="plItem">
@@ -98,7 +106,9 @@
                                         </div>
                                         <span class="plTitle">{{ $item->name }}</span>
 
-                                        <div class="plLength"></div>
+                                        <div class="my-album-btn-remove-song">
+                                            <i class='bx bx-x' style="transform: scale(1.5)"></i>
+                                        </div>
                                     </div>
                                 </li>
                             @endforeach
@@ -109,13 +119,25 @@
             </div>
         </div>
     </div>
+    @else
+        <p style="margin: 20px">
+            No songs
+        </p>
+    @endif
 @endsection
 
 @section('script')
+    <script>
+        var dataListSongs = @json($listSongs);
+        let listSongsMap = {};
+        dataListSongs.forEach((value) => {
+            listSongsMap[value['id']] = value;
+        })
+    </script>
     <script src="{{ asset('js/audio-my-album.js') }}"></script>
     <script>
         $(function () {
-            let backGroundImage = '{{ $listSongs[0]->image }}';
+            let backGroundImage = '{{ count($listSongs) > 0 ? $listSongs[0]->image : null }}';
 
             $('.back-drop-song').attr('style', `background-image: url('${backGroundImage}')`);
 
@@ -151,6 +173,27 @@
                         }
                     })
                 }
+            })
+
+            $('i', '.my-album-btn-remove-song').on('click', function (e) {
+                e.preventDefault();
+                let self = $(this);
+                self.parents('li').remove();
+                $.ajax({
+                    url: '{{ route('client.my-album.update') }}',
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        song_id: '' + JSON.parse(self.parents('li').attr('data-song-information'))['id'],
+                        action: 'delete'
+                    },
+                    success: function (data, textStatus, xhr) {
+                    },
+                    error: function (e) {
+                    }
+                })
             })
         })
     </script>

@@ -9,7 +9,7 @@
             'parameters' => \Route::current()->parameters
         ];
     ?>
-    <div class="section-tv" id="page-track" data-page-track="{{ json_encode($data) }}">
+    <div class="section-tv" id="page-track" data-page-track="{{ json_encode($data) }}" >
         <div class="section-inner">
             <div class="title">
                 <h3></h3>
@@ -58,10 +58,17 @@
                         </form>
                         <p style="display: none;">Bạn đã đánh giá <span class="rating-score"></span> sao</p>
                     </div>
-
                 </div>
                 <div class="audio-description">
                     <div class="lyric">
+                        <h3>Ca sĩ: </h3>
+                        <span class="singer-name">
+                            {!! nl2br($listSongs[0]->singer_name) !!}
+                        </span>
+                        <h3>Nhạc sĩ: </h3>
+                        <span class="musician">
+                            {!! nl2br($listSongs[0]->musician) !!}
+                        </span>
                         <h3>Lyric: </h3>
                         <span class="lyric-content">
                             {!! nl2br($listSongs[0]->lyric) !!}
@@ -106,7 +113,6 @@
                                 </li>
                             @endforeach
                         </div>
-
                     </ul>
                 </div>
                 @if(count($listRecommendSongs) > 0)
@@ -204,6 +210,11 @@
 @section('script')
     <script>
         var dataPageTrack = JSON.parse($('#page-track').attr('data-page-track'));
+        var dataListSongs = @json($listSongs);
+        let listSongsMap = {};
+        dataListSongs.forEach((value) => {
+            listSongsMap[value['id']] = value;
+        })
     </script>
     <script src="{{ asset('js/audio.js') }}"></script>
     <script>

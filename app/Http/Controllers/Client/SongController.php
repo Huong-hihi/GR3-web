@@ -42,9 +42,15 @@ class SongController extends Controller
     {
         $user = Auth::user();
         $categories = $this->category::orderBy('id','DESC')->paginate(3);
-        $listSongs = [$this->song->find($id)];
+        $listSongs = [$this->song->where('id', $id)->with([
+            'comments' => function($q) use ($user) {
+                $q->with('user', 'parent')
+                    ->orderBy('created_at', 'DESC');
+            },
+        ])->first()];
         $listSongsMyAlbumHash = [];
         $listRecommendSongs = [];
+        $listComments = $listSongs[0]->comments;
 
         if ($user) {
             $listRecommendSongs = $this->song->handleGetRecommendSong();
@@ -52,6 +58,6 @@ class SongController extends Controller
             $listSongsMyAlbumHash = $album ? $this->album->getListSongsMyAlbumHash($album->id) : [];
         }
 
-        return view('client.track')->with(compact('categories','listSongs', 'listRecommendSongs', 'listSongsMyAlbumHash'));
+        return view('client.track')->with(compact('categories','listSongs', 'listRecommendSongs', 'listSongsMyAlbumHash', 'listComments'));
     }
 }

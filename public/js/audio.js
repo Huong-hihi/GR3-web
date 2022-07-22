@@ -1,7 +1,7 @@
 jQuery(function ($) {
-    'use strict'
     var supportsAudio = !!document.createElement('audio').canPlayType;
-    $('#plList').data('data-track', {});
+    const domPLList = $('#plList');
+    domPLList.data('data-track', {});
 
     if (supportsAudio) {
         let controls = `
@@ -156,7 +156,7 @@ jQuery(function ($) {
                 songCurrent.addClass('plSel');
                 npTitle.text(songCurrent.find('.plTitle').text());
                 audio.src = window.location.protocol + "//" + window.location.host + '/' + songCurrent.attr('data-song-url');
-                $('.lyric-content').html(songCurrent.attr('data-song-lyric'));
+                changeDescriptionTrack(songId);
 
                 let songInformation = JSON.parse(self.attr('data-song-information')) ?? {};
                 changeAddTrackIcon(songInformation['inMyAlbum'] ? 'added' : 'add');
@@ -164,8 +164,6 @@ jQuery(function ($) {
                 self.attr('data-song-information', JSON.stringify(songInformation));
 
                 callAjax(dataPageTrack['listenSongURL'],'POST',{song_id: songId});
-
-
                 updateDownload(id, audio.src);
             }, updateDownload = function (id, source) {
                 player.on('loadedmetadata', function () {
@@ -184,7 +182,14 @@ jQuery(function ($) {
     }
 
     function changeDataTrackPl(key, value) {
-        let dataPL = $('#plList').data('data-track');
-        $('#plList').data('data-track', {...dataPL, [key]: value});
+        let dataPL = domPLList.data('data-track');
+        domPLList.data('data-track', {...dataPL, [key]: value});
     }
+
+    function changeDescriptionTrack(id) {
+        $('.lyric-content').html(listSongsMap[id]['lyric']);
+        $('.singer-name').html(listSongsMap[id]['singer_name']);
+        $('.musician').html(listSongsMap[id]['musician']);
+    }
+
 });

@@ -49,21 +49,28 @@ class SingerController extends Controller
         $user = Auth::user();
         $categories = $this->category::orderBy('id','DESC')->get();
 
-        $listSongs = Song::where('singer_name', $singer->name)
+        $listSongs = [Song::where('singer_name', $singer->name)
             ->when($user, function($q) use ($user){
                 $q->with('ratings');
             })
-            ->get();
-
+            ->with([
+                'comments' => function($q) use ($user) {
+                    $q->with('user', 'parent')
+                        ->orderBy('created_at', 'DESC');
+                },
+            ])
+            ->first()];
         $listRecommendSongs = [];
         $listSongsMyAlbumHash = [];
+
+        $listComments = $listSongs[0]->comments;
 
         if ($user) {
             $listRecommendSongs = $this->song->handleGetRecommendSong();
             $listSongsMyAlbumHash = $this->album->getListSongsMyAlbumHash($user->album ? $user->album->id : null);
         }
 
-        return view('client.track')->with(compact('categories','listSongs', 'listRecommendSongs', 'listSongsMyAlbumHash'));
+        return view('client.track')->with(compact('categories','listSongs', 'listRecommendSongs', 'listSongsMyAlbumHash', 'listComments'));
     }
 
     public function search(Request $request)

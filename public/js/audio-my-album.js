@@ -153,7 +153,7 @@ jQuery(function ($) {
                 songCurrent.addClass('plSel');
                 npTitle.text(songCurrent.find('.plTitle').text());
                 audio.src = window.location.protocol + "//" + window.location.host + '/' + songCurrent.attr('data-song-url');
-                $('.lyric-content').html(songCurrent.attr('data-song-lyric'));
+                changeDescriptionTrack(songId);
                 let dataPageTrack = JSON.parse($('#page-track').attr('data-page-track'));
                 callAjax(dataPageTrack['listenSongURL'],'POST',{song_id: songId});
 
@@ -177,5 +177,12 @@ jQuery(function ($) {
     function changeDataTrackPl(key, value) {
         let dataPL = $('#plList').data('data-track');
         $('#plList').data('data-track', {...dataPL, [key]: value});
+    }
+
+
+    function changeDescriptionTrack(id) {
+        $('.lyric-content').html(listSongsMap[id]['lyric']);
+        $('.singer-name').html(listSongsMap[id]['singer_name']);
+        $('.musician').html(listSongsMap[id]['musician']);
     }
 });
