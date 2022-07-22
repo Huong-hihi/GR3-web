@@ -51,7 +51,7 @@ class CommentController extends Controller
         $commentStore = $this->comment->create($data);
 
 
-        $comment = $this->comment->where('id', $commentStore->id)->with('user', 'parent')->get();
+        $comment = $this->comment->where('id', $commentStore->id)->with('user', 'parent')->first();
 
         return response(['message' => $comment], 200);
     }

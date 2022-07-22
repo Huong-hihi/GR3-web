@@ -879,3 +879,19 @@ html, body {
     color: #eee;
     cursor: pointer;
 }
+
+.comment-parent {
+    margin: 20px 30px;
+    padding-left: 10px;
+    color: #ccc;
+    border-left: 3px solid #ccc;
+    line-height: 1.3;
+}
+
+.comment-parent-content {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

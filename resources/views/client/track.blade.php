@@ -117,7 +117,6 @@
                             <div class="inner">
                                 <ul>
                                     @foreach($listRecommendSongs as $song)
-
                                         <li class="track-item" data="{{ json_encode() }}">
                                             <a href="{{ route('client.song.detail', ['id'=> $song->id])}}">
                                             <div class="recommend-song">
@@ -154,7 +153,12 @@
                 <textarea id="textarea"
                      tabindex="0"
                      style="white-space: pre"
-                     data-text="Bạn có bình luận gì về bài hát này?" role="textbox" aria-multiline="true" spellcheck="false"></textarea>
+                     data-text="Bạn có bình luận gì về bài hát này?"
+                     role="textbox"
+                     aria-multiline="true"
+                     spellcheck="false"
+                     data-textarea-parent-id
+                ></textarea>
                 <div class="comment-note">
                     Nhấn shift + enter để gửi
                 </div>
@@ -162,8 +166,22 @@
             <div class="comment-list-wrapper">
                 <ul>
                     @foreach($listComments as $comment)
-                    <li>
+                    <?php
+                        $dataComment = [
+                            'id' => $comment->id,
+                            'content' => $comment->content,
+                            'user_id' => $comment->user ? $comment->user->id : null
+                        ]
+                    ?>
+                    <li data-comment="{{ json_encode($dataComment) }}">
                         <div class="inner">
+                            @if($comment->parent)
+                            <div class="comment-parent">
+                                <div class="comment-parent-content">
+                                    {!! nl2br($comment->parent->content) !!}
+                                </div>
+                            </div>
+                            @endif
                             <div class="comment-user-info">
                                 <div class="comment-user-avatar" style="background-image: url('{{ $comment->user->avatar ?? asset('images/default-user-image.png') }}')"></div>
                                 <span class="comment-user-name">{{ $comment->user->name }}</span>
@@ -177,10 +195,8 @@
                     </li>
                     @endforeach
                 </ul>
-
             </div>
         </div>
-
     </div>
 
 @endsection
@@ -193,6 +209,9 @@
     <script>
         $(function () {
             let backGroundImage = '{{ $listSongs[0]->image }}';
+            let textArea = $('#textarea');
+            let ratingScore = $('.rating-score');
+            let dataComment = null;
 
             $('.back-drop-song').attr('style', `background-image: url('${backGroundImage}')`);
 
@@ -206,8 +225,8 @@
                     let score = $(this).text();
                     $('.rating-star').prop('checked', false);
                     $('#rating-' + score).prop('checked', true)
-                    $('.rating-score').text(score);
-                    $('.rating-score').parent().fadeIn(100);
+                    ratingScore.text(score);
+                    ratingScore.parent().fadeIn(100);
                     $.ajax({
                         url: url,
                         method: "POST",
@@ -263,16 +282,34 @@
                 let data = $(this).data('data-track');
             });
 
-            $("#textarea").keypress(function(event) {
+            textArea.on('click', function (e) {
+                if (!userId) window.location.href = '{{ route('login') }}';
+            })
+
+            textArea.keypress(function(event) {
                 if (event.keyCode === 13 && event.shiftKey) {
+                    var date = new Date();
+
+                    var year = date.getFullYear();
+                    var month = date.getMonth() + 1;
+                    var day = date.getDate();
+                    var hours = date.getHours();
+                    var minutes = date.getMinutes();
+                    var seconds = date.getSeconds();
+                    if (day < 10) day = '0' + day;
+                    if (month < 10) month = '0' + month;
+                    if (hours < 10) hours = '0' + hours;
+                    if (minutes < 10) minutes = '0' + minutes;
+
                     let self = $(this);
                     let content = self.val();
                     let url = dataPageTrack['apiCommentCreate'];
+                    let parentId = $(this).attr('data-textarea-parent-id');
                     let data = {
                         content: content,
                         commentable_id: null,
                         commentable_type: null,
-
+                        parent_id: parentId
                     }
 
                     if(dataPageTrack['routeName'] === 'client.album.detail') {
@@ -285,26 +322,69 @@
                         data['commentable_type'] = 'song';
                     }
 
-                    let result = callAjax(url, 'POST', data);
-                    console.log(result);
-                    let template = `
-                    <li>
-                        <div class="inner">
-                            <div class="comment-user-info">
-                                <div class="comment-user-avatar" style="background-image: url('{{ $comment->user->avatar ?? asset('images/default-user-image.png') }}')"></div>
-                                <span class="comment-user-name">{{ $comment->user->name }}</span>
-                                <span class="comment-user-publish-time">{{ $comment->created_at }}</span>
-                            </div>
-                            <div class="comment-user-body">
-                                {!! nl2br($comment->content) !!}
-                            </div>
-                                    <span class="comment-reply">Reply</span>
+                    let parentCommentTemplate = null;
+
+                    if(textArea.attr('data-textarea-parent-id')) {
+                        parentCommentTemplate = `
+                    <div class="comment-parent">
+                        <div class="comment-parent-content">
+                        ${dataComment != null ? dataComment['content'].replace(/\n\r?/g, '<br />') : null}
                         </div>
-                    </li>
-                    `
+                    </div>`;
+                    }
+                    // let dataComment = {
+                    //     id:
+                    // }
+                    //     'id' => $comment->id,
+                    //     'content' => $comment->content,
+                    //     'user_id' => $comment->user ? $comment->user->id : null
+                    //     ]
+
+                    let template =
+                        `<li data-comment>
+                            <div class="inner">
+                                ${parentCommentTemplate}
+                                <div class="comment-user-info">
+                                    <div class="comment-user-avatar" style="background-image: url('{{ $global['user']->avatar ?? asset('images/default-user-image.png') }}')"></div>
+                                    <span class="comment-user-name">{{ $global['user'] ? $global['user']->name : null }}</span>
+                                    <span class="comment-user-publish-time">${year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds}</span>
+                                </div>
+                                <div class="comment-user-body">
+                                    ${data['content'].replace(/\n\r?/g, '<br />')}
+                                </div>
+                                <span class="comment-reply">Reply</span>
+                            </div>
+                        </li>`;
+
+                    $('ul', '.comment-list-wrapper').prepend(template);
+                    $("#textarea").val('');
+
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: data,
+                        success: function (data, textStatus, xhr) {
+                           console.log(data, textStatus, xhr)
+                        },
+                        error: function (e) {
+                            return e;
+                        }
+                    })
+
                 }
             });
 
+            $(document).on('click', '.comment-reply',  function (e) {
+                dataComment = JSON.parse($(this).parents('li').attr('data-comment'));
+                let parentId = dataComment['id'];
+
+                textArea.attr('data-textarea-parent-id', parentId);
+                textArea.focus();
+                $('html, body').animate({scrollTop:$('#textarea').position().top - 200}, 'slow');
+            })
         })
     </script>
 @endsection
