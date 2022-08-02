@@ -54,6 +54,14 @@
                     My Album
                 </a>
             </li>
+            <li class="nav-item active">
+                <a href="{{ $userNav ? route('client.follow.my-follow') : route('login') }}">
+                    {{--                <span class="nav-icon">--}}
+                    {{--                    <ion-icon name="home-outline"></ion-icon>--}}
+                    {{--                </span>--}}
+                    Follow
+                </a>
+            </li>
             <li class="nav-item">
                 <a href="{{ route('home') . '#trending' }}">
 {{--                <span class="nav-icon">--}}

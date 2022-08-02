@@ -36,6 +36,11 @@ class Singer extends Model
         return $this->hasMany(Song::class, 'singer_name', 'name');
     }
 
+    public function follows()
+    {
+        return $this->belongsToMany('App\Http\Models\User', 'follows', 'singer_id', 'user_id');
+    }
+
     public static function find($id, $with)
     {
         return Singer::where('id', $id)->with($with)->first();

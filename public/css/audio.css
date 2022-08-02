@@ -605,6 +605,14 @@ html, body {
     background-color: #5ad8eb;
 }
 
+#singer-box-head .singer-box-right .active {
+    background-color: #5ad8eb;
+}
+
+#singer-box-head .singer-box-right .active .bx.bxs-heart {
+    color: red;
+}
+
 #singer-list-songs .item {
     width: unset;
 }
@@ -904,4 +912,41 @@ html, body {
 
 .my-album-btn-remove-song i:hover{
     color: #5ad8eb;
+}
+
+#page-my-follow .follow-wrapper {
+    margin-top: 50px;
+}
+
+#page-my-follow .list-singer {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+}
+
+#page-my-follow .item {
+    margin-left: 50px;
+    margin-bottom: 50px;
+    cursor: pointer;
+}
+
+#page-my-follow .item:hover {
+    color: #5ad8eb;
+}
+
+#page-my-follow .singer-avatar {
+    width: 200px;
+    height: 200px;
+}
+
+#page-my-follow img.singer-image {
+    object-fit: unset;
+    border-radius: 50%;
+}
+
+#page-my-follow p.singer-name {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
 }

@@ -34,7 +34,7 @@
     <link rel="stylesheet" href=@yield('style') />
 </head>
 
-<body @yield('body-attribute')>
+<body @yield('body-attribute') style="background-color: #192536;">
     @yield('master')
     <script src="{{ cxl_asset('libs/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ cxl_asset('libs/popper/popper.min.js') }}"></script>

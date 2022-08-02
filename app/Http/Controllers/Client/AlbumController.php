@@ -47,14 +47,12 @@ class AlbumController extends Controller
         $this->song = $song;
     }
 
-    /**
-     * Show the application dashboard.
-     * @param $id
-     * @return Renderable
-     */
     public function detail(Request $request, $id)
     {
         $user = Auth::user();
+
+        if (!$user) return redirect()->route('login');
+
         $categories = $this->category::orderBy('id','DESC')->get();
         $album = $this->album::where('id', $id)
             ->with([
@@ -82,6 +80,9 @@ class AlbumController extends Controller
     public function myAlbum()
     {
         $user = Auth::user();
+
+        if (!$user) return redirect()->route('login');
+
         $categories = $this->category::orderBy('id','DESC')->get();
         $album = $this->album::where('user_id', $user->id)->with(['songs' => function($q) use ($user){
             if ($user) $q->with('ratings');

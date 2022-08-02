@@ -3,6 +3,7 @@
 @section('body-id', 'page-singer')
 
 @section('content')
+{{--    {{ dd($singer->toArray()) }}--}}
 <div class="container fluid w-80p">
     <div class="section-tv" id="singer-box-head">
         <div class="section-inner">
@@ -25,7 +26,7 @@
                 <div class="singer-avatar" style="background-image: url({{ $singer->user->avatar }})"></div>
                 <div class="action">
                     <a class="action-btn play-all" href="{{ route('client.singer.album', ['id' => $singer->id]) }}">PLAY ALL <i class='bx bxs-playlist' ></i></a>
-                    <div class="action-btn follow">FOLLOW <i class='bx bxs-heart' ></i></div>
+                    <div class="action-btn follow {{ count($singer->follows) > 0 ? 'active' : '' }}">FOLLOW <i class='bx bxs-heart' ></i></div>
                 </div>
             </div>
         </div>
@@ -66,8 +67,32 @@
 @section('script')
 {{--    <script src="{{ asset('js/audio.js') }}"></script>--}}
     <script>
-        $(function () {
+        let singer = @json($singer);
 
+        $(function () {
+            $('.action-btn.follow').on('click', function () {
+                if (!userId) {
+                    window.location.href = '{{ route('login') }}';
+                } else {
+                    let url = "{{ route('api.singer.toggle.follow') }}";
+                    $(this).toggleClass('active');
+                    $.ajax({
+                        url: url,
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            singer_id : singer.id
+                        },
+                        success: function (data, textStatus, xhr) {
+                        },
+                        error: function (e) {
+
+                        }
+                    })
+                }
+            })
         })
     </script>
 @endsection

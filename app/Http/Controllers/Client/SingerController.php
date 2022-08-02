@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
+use  App\Http\Controllers\Controller;
 use App\Http\Models\Album;
 use App\Http\Models\Category;
+use App\Http\Models\Follow;
 use App\Http\Models\Singer;
 use App\Http\Models\Song;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PHPUnit\Exception;
 
 class SingerController extends Controller
 {
@@ -37,7 +39,22 @@ class SingerController extends Controller
      */
     public function detail(Request $request, $id)
     {
-        $singer = Singer::find($id, ['user', 'songs']);
+        $user = Auth::user();
+
+        $singer = Singer::where('id', $id)->with(
+            [
+                'user',
+                'songs',
+                'follows' => function ($q) use ($user) {
+                    if ($user) {
+                        $q->where('user_id', $user->id);
+                    } else {
+                        $q->where('user_id', 0);
+                    }
+                }
+            ])
+            ->first();
+
         if (!$singer) return abort(404);
 
         return view('client.singer', compact('singer'));
