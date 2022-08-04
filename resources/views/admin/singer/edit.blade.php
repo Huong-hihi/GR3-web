@@ -8,12 +8,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
-                    <form method="POST" action="{{ route('admin.singer.update', ['id' => $singer->user->id]) }}"
+                    <form method="POST" action="{{ route('admin.singer.update', ['id' => $singer->id]) }}"
                           enctype="multipart/form-data">
                         <h5 class="card-header">Singer Edit</h5>
                         <div class="card-body">
                             <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                <img src="{{ $singer->user->avatar ?? cxl_asset('images/default-user-image.png') }}"
+                                <img src="{{ $singer->image ?? cxl_asset('images/default-user-image.png') }}"
                                      alt="user-avatar" class="d-block rounded" height="100" width="100"
                                      id="uploadedAvatar">
                                 <div class="button-wrapper">
@@ -36,11 +36,11 @@
                             @csrf
                             <input type="hidden" name="_method" value="PUT">
                             <div class="row">
-                                <div class="mb-3 col-md-6">
-                                    <label for="email" class="form-label">E-mail</label>
-                                    <input class="form-control" type="text" id="email" name="email"
-                                           value="{{ $singer->user->email }}" placeholder="" disabled>
-                                </div>
+{{--                                <div class="mb-3 col-md-6">--}}
+{{--                                    <label for="email" class="form-label">E-mail</label>--}}
+{{--                                    <input class="form-control" type="text" id="email" name="email"--}}
+{{--                                           value="{{ $singer->user->email }}" placeholder="" disabled>--}}
+{{--                                </div>--}}
                                 <div class="mb-3 col-md-6">
                                     <div class="form-password-toggle">
                                         <label class="form-label" for="basic-default-password12">Password</label>
@@ -57,7 +57,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label for="name" class="form-label">Name</label>
                                     <input class="form-control" type="text" id="name" name="name"
-                                           value="{{ old('name') ?? $singer->user->name }}" autofocus="">
+                                           value="{{ old('name') ?? $singer->name }}" autofocus="">
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="full_name" class="form-label">Full Name</label>

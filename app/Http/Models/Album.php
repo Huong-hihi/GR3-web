@@ -40,7 +40,7 @@ class Album extends Model
     {
         $userAdmin = User::where('role', 1)->first();
 
-        return Album::where('user_id', $userAdmin->id)->with('songs')->paginate(3);
+        return Album::where('user_id', $userAdmin->id)->with('songs')->paginate(8);
     }
 
     public static function createAlbum($request)

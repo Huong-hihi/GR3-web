@@ -64,6 +64,10 @@
   }
 }
 
+.app-color {
+    background-color: var(--bs-body-bg) !important;
+}
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);

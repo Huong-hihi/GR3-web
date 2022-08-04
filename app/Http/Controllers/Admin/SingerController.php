@@ -40,8 +40,6 @@ class SingerController extends Controller
     {
         DB::beginTransaction();
         try {
-            $userCreated = $this->user->store($request);
-            $request->merge(['user_id' => $userCreated->id]);
             $this->singer->store($request);
 
             DB::commit();
@@ -55,9 +53,9 @@ class SingerController extends Controller
         }
     }
 
-    public function edit($userID)
+    public function edit($id)
     {
-        $singer = $this->singer->findByUserID($userID);
+        $singer = $this->singer->find($id);
 
         if ($singer->user->role == User::ROLE_SINGER)
             return view('admin.singer.edit', ['singer' => $singer]);
@@ -65,12 +63,11 @@ class SingerController extends Controller
         return abort(404);
     }
 
-    public function update(Request $request, $userID)
+    public function update(Request $request, $id)
     {
         DB::beginTransaction();
         try {
-            $this->user->updateUser($request, $userID);
-            $this->singer->updateSingerByUserID($request, $userID);
+            $this->singer->updateSinger($request, $id);
 
             DB::commit();
 
@@ -83,10 +80,9 @@ class SingerController extends Controller
         }
     }
 
-    public function delete($userID)
+    public function delete($id)
     {
-        $this->user->deleteUser($userID);
-        $this->singer->deleteSingerByUserID($userID);
+        $this->singer->deleteSinger($id);
 
         return redirect()->route('admin.singer.index');
     }

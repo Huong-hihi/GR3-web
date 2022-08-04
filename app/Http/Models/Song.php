@@ -112,6 +112,12 @@ class Song extends Model
         return Song::where('name', 'like', '%' . $q . '%')
             ->orWhere('singer_name', 'like', '%' . $q . '%')
             ->with('singer')
+            ->limit(50)
             ->get();
+    }
+
+    public static function getSongByCategory($categoryId)
+    {
+        return Song::where('category_id', $categoryId)->limit(50)->get();
     }
 }

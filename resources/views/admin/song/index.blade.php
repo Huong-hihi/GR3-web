@@ -5,7 +5,21 @@
         <h4 class="fw-bold py-3 mb-4" style="text-align: center">
             <span class="text-muted fw-light"></span>Song
         </h4>
-        <a href="{{ route('admin.song.create') }}" class="btn btn-primary mb-3">Create</a>
+        <div class="row">
+            <div class="mb-3 col-md-4">
+                <a href="{{ route('admin.song.create') }}" class="btn btn-primary mb-3">Create</a>
+            </div>
+            <div class="mb-3 col-md-4"></div>
+            <div class="mb-3 col-md-4">
+                <form action="">
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                        <input type="text" name="search" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="basic-addon-search31">
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div class="card">
 
             <div class="table-responsive text-nowrap">
@@ -27,13 +41,13 @@
 
                     <tr>
                         <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->id }}</strong></td>
-                        <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->name }}</strong></td>
+                        <td class = "threedots"><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->name }}</strong></td>
                         <td>{{ $song->category_id }}</td>
-                        <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->musician }}</strong></td>
-                        <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->url }}</strong></td>
+                        <td class = "threedots"><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->musician }}</strong></td>
+                        <td class = "threedots"><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->url }}</strong></td>
                         <td class = "threedots"><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->lyric }}</strong></td>
-                        <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->file_mp3 }}</strong></td>
-                        <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->image }}</strong></td>
+                        <td class = "threedots"><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->file_mp3 }}</strong></td>
+                        <td class = "threedots"><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->image }}</strong></td>
                         {{-- <td>
                             <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="Lilian Fuller">

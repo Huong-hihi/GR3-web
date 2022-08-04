@@ -28,6 +28,14 @@ html, body {
     width: 45vw;
 }
 
+.container {
+    margin-bottom: 200px;
+}
+
+.app-color {
+    background-color: #192536;
+}
+
 
 #plwrap .list-track-name {
     background-color: #364c6a;
@@ -581,6 +589,10 @@ html, body {
     background-repeat: no-repeat;
 }
 
+#singer-box-head .singer-box-right .singer-avatar img{
+    border-radius: 50%;
+}
+
 #singer-box-head .singer-box-right {
     display: flex;
     flex-direction: column;
@@ -746,7 +758,7 @@ html, body {
     position: absolute;
     left: 20px;
     top: 50%;
-    z-index: 1000;
+    z-index: 100;
 }
 
 .ranking-list .rank-1 .number {
@@ -761,7 +773,7 @@ html, body {
     margin: 0;
     justify-content: space-between;
     align-items: center;
-    z-index: 999;
+    z-index: 99;
 }
 
 .ranking-list .rank-1 .song-image {

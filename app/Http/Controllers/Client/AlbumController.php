@@ -7,6 +7,7 @@ use App\Http\Models\Album;
 use App\Http\Models\Category;
 use App\Http\Models\Comment;
 use App\Http\Models\Song;
+use App\Http\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\Support\Renderable;
@@ -51,7 +52,9 @@ class AlbumController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user) return redirect()->route('login');
+//        if (!$user) return redirect()->route('login');
+
+        if ($user && $user->role == User::ROLE_ADMIN) return redirect()->route('admin.user.index');
 
         $categories = $this->category::orderBy('id','DESC')->get();
         $album = $this->album::where('id', $id)

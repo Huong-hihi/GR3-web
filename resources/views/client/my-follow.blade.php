@@ -12,7 +12,7 @@
                     <a href="{{ route('client.singer.detail', ['id' => $singer->id]) }}">
                         <li class="item">
                             <div class="singer-avatar">
-                                <img src="{{ $singer->user->avatar }}" alt="" class="singer-image">
+                                <img src="{{ $singer->image }}" alt="" class="singer-image">
                             </div>
                             <p class="singer-name">{{ $singer->name }}</p>
                         </li>

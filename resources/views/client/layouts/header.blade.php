@@ -12,7 +12,7 @@
         <div class="nav-sign">
             @if(!$user)
                 <a href="{{ route('login') }}" class="btn btn-hover">
-                    <span>Sign in</span>
+                    <span>Đăng Nhập</span>
                 </a>
             @elseif($user->role == \App\Http\Models\User::ROLE_ADMIN)
                 <a href="{{ route('admin.user.index') }}" class="btn btn-hover">
@@ -38,52 +38,68 @@
         $userNav = \Illuminate\Support\Facades\Auth::user();
         ?>
         <ul class="nav-menu">
-            <li class="nav-item active">
+            <li class="nav-item2 active">
                 <a href="{{ route('home') }}">
 {{--                <span class="nav-icon">--}}
 {{--                    <ion-icon name="home-outline"></ion-icon>--}}
 {{--                </span>--}}
-                    Home
+                    Trang Chủ
                 </a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item2 active nav-category category-hover">
+                <span>
+                    Thể loại
+                </span>
+                <ul class="nav-sub-category-wrapper">
+                    @foreach($global['categories'] as $category)
+                    <li class="category-item">
+                        <a href="{{ route('home.category', ['id' => $category->id]) }}" class="category-link" onclick="function click (e) {e.preventDefault()}">
+                            <div>
+                                {{ $category->name }}
+                            </div>
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
+            </li>
+            <li class="nav-item2 active">
                 <a href="{{ $userNav ? route('client.album.my-album') : route('login') }}">
                     {{--                <span class="nav-icon">--}}
                     {{--                    <ion-icon name="home-outline"></ion-icon>--}}
                     {{--                </span>--}}
-                    My Album
+                    Album của tôi
                 </a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item2 active">
                 <a href="{{ $userNav ? route('client.follow.my-follow') : route('login') }}">
                     {{--                <span class="nav-icon">--}}
                     {{--                    <ion-icon name="home-outline"></ion-icon>--}}
                     {{--                </span>--}}
-                    Follow
+                    Ca sĩ theo dõi
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="{{ route('home') . '#trending' }}">
+{{--            <li class="nav-item">--}}
+{{--                <a href="{{ route('home') . '#trending' }}">--}}
 {{--                <span class="nav-icon">--}}
 {{--                    <ion-icon name="film-outline"></ion-icon>--}}
 {{--                </span>--}}
-                    Trending
-                </a>
-            </li>
-            <li class="nav-item">
+{{--                    Thịnh hành--}}
+{{--                </a>--}}
+{{--            </li>--}}
+            <li class="nav-item2">
                 <a href="{{ route('home') . '#new-song' }}">
 {{--                <span class="nav-icon">--}}
 {{--                    <ion-icon name="star-outline"></ion-icon>--}}
 {{--                </span>--}}
-                    New song
+                    Bài hát mới
                 </a>
             </li>
-            <li class="nav-item" style="display: none">
+            <li class="nav-item2" style="display: none">
                 <a href="{{ route('home') . '#singer' }}">
 {{--                <span class="nav-icon">--}}
 {{--                    <ion-icon name="mic-circle-outline"></ion-icon>--}}
 {{--                </span>--}}
-                    Singer
+                    Ca sĩ
                 </a>
             </li>
             {{--        @if($userNav)--}}
@@ -95,12 +111,12 @@
             {{--                Account--}}
             {{--            </a>--}}
             {{--        </li>--}}
-            <li class="nav-item">
+            <li class="nav-item2">
                 <a href="#">
 {{--                <span class="nav-icon">--}}
 {{--                    <ion-icon name="help-circle-outline"></ion-icon>--}}
 {{--                </span>--}}
-                    About
+                    Thông tin
                 </a>
             </li>
 

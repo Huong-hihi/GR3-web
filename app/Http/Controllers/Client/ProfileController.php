@@ -30,6 +30,8 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
+        if ($user && $user->role == User::ROLE_ADMIN) return redirect()->route('admin.user.index');
+
         return view('client.profile.index')->with(compact('user'));
     }
 

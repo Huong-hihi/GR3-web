@@ -37,7 +37,7 @@
                 <div class="section-tv" id="new-song">
                     <div class="section-wrapper" id="section-wrapper">
                         <div class="section-header">
-                            New song
+                            Bài hát mới
                         </div>
                         <div class="items">
                             @foreach($songs as $song)
@@ -70,7 +70,7 @@
                 <div class="section-tv" id="singer">
                     <div class="section-wrapper">
                         <div class="section-header">
-                            Singer
+                            Ca Sĩ
                         </div>
                         <div class="items">
                             @foreach($singers as $singer)
@@ -85,7 +85,7 @@
                                                     <i class='bx bxs-right-arrow'></i>
                                                 </div>
                                             </div>
-                                            <img src="{{ $singer->user->avatar }}">
+                                            <img src="{{ $singer->image }}">
                                         </div>
                                         <div class="movie-item-content">
                                             <span>{{ $singer->name }}</span>
@@ -104,7 +104,7 @@
 {{--                        <h3>Ranking</h3>--}}
 {{--                    </div>--}}
                     <div class="section-header">
-                        Ranking
+                        Xếp hạng bài hát
                     </div>
                     <div class="ranking-list">
                         <div class="list-item">

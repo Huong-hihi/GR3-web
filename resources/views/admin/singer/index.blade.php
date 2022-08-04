@@ -26,26 +26,25 @@
                     <tbody class="table-border-bottom-0">
                     @foreach($singers as $singer)
                     <tr>
-                        <td>{{ $singer->nickname }}</td>
-                        <td>{{ $singer->user->email }}</td>
-                        <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $singer->user->name }}</strong></td>
+                        <td class = "threedots"><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $singer->name }}</strong></td>
+                        <td class = "threedots">{{ $singer->nickname }}</td>
                         <td>
                             <ul class="list-unstyled singers-list m-0 avatar-group d-flex align-items-center">
                                 <li class="avatar avatar-xs pull-up">
-                                    <img src="{{ $singer->user->avatar ?? cxl_asset('images/default-user-image.png') }}" alt="Avatar" class="rounded-circle">
+                                    <img src="{{ $singer->image ?? cxl_asset('images/default-user-image.png') }}" alt="Avatar" class="rounded-circle">
                                 </li>
                             </ul>
                         </td>
-                        <td>{{ $singer->nation }}</td>
-                        <td>{{ $singer->prize }}</td>
-                        <td>{{ $singer->information }}</td>
-                        <td>{{ $singer->home_town }}</td>
+                        <td class = "threedots">{{ $singer->nation }}</td>
+                        <td class = "threedots">{{ $singer->prize }}</td>
+                        <td class = "threedots">{{ $singer->information }}</td>
+                        <td class = "threedots">{{ $singer->home_town }}</td>
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{ route('admin.singer.edit', ['id' => $singer->user_id]) }}"><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                                    <a class="dropdown-item" href="{{ route('admin.singer.delete', ['id' => $singer->user_id]) }}"><i class="bx bx-trash me-2"></i> Delete</a>
+                                    <a class="dropdown-item" href="{{ route('admin.singer.edit', ['id' => $singer->id]) }}"><i class="bx bx-edit-alt me-2"></i> Edit</a>
+                                    <a class="dropdown-item" href="{{ route('admin.singer.delete', ['id' => $singer->id]) }}"><i class="bx bx-trash me-2"></i> Delete</a>
                                 </div>
                             </div>
                         </td>

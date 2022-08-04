@@ -44,11 +44,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function singer()
-    {
-        return $this->HasOne('App\Http\Models\Singer');
-    }
-
     public function album()
     {
         if ($this->role == $this::ROLE_ADMIN) return $this->hasMany(Album::class);
@@ -100,7 +95,7 @@ class User extends Authenticatable
         $data = $request->all();
 
         $user = User::find($id);
-
+//dd($id == Auth::user()->id);
         if ($user && ($user->role == User::ROLE_ADMIN || $id == Auth::user()->id)) {
             if ($request->hasFile('avatar')) {
                 $file= $request->file('avatar');
@@ -110,7 +105,7 @@ class User extends Authenticatable
             }
 
             if ($data['password'] == null) unset($data['password']);
-
+//dd($data);
             return $user->update($data);
         }
 

@@ -12,12 +12,14 @@ class Singer extends Model
     use Notifiable;
     use SoftDeletes;
 
+    protected $table = 'singers';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'full_name', 'nickname', 'nation', 'prize', 'information', 'home_town', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['full_name', 'nickname', 'nation', 'prize', 'information', 'home_town', 'created_at', 'updated_at', 'deleted_at'];
 
     public static function store($request)
     {
@@ -26,14 +28,14 @@ class Singer extends Model
         return Singer::create($data);
     }
 
-    public function user()
-    {
-        return $this->belongsTo('App\Http\Models\User');
-    }
-
     public function songs()
     {
         return $this->hasMany(Song::class, 'singer_name', 'name');
+    }
+
+    public static function deleteSinger($id)
+    {
+        return Singer::where('id', $id)->delete();
     }
 
     public function follows()
@@ -41,38 +43,26 @@ class Singer extends Model
         return $this->belongsToMany('App\Http\Models\User', 'follows', 'singer_id', 'user_id');
     }
 
-    public static function find($id, $with)
+    public static function find($id)
     {
-        return Singer::where('id', $id)->with($with)->first();
-    }
-
-    public static function findByUserID($userID)
-    {
-        return Singer::where('user_id', $userID)
-        ->with('user')
-        ->first();
+        return Singer::where('id', $id)->first();
     }
 
     public static function getAll() {
-        return Singer::with('user')->get();
+        return Singer::all();
     }
 
-    public static function updateSingerByUserID($request, $userID)
+    public static function updateSinger($request, $id)
     {
         $data = $request->all();
 
-        return Singer::where('user_id', $userID)->first()->update($data);
-    }
-
-    public static function deleteSingerByUserID($userID)
-    {
-        return User::find($userID)->delete();
+        return Singer::where('id', $id)->first()->update($data);
     }
 
     public function getImageAttribute($attr): string
     {
         if (strpos($attr, 'http') !== false) return $attr;
 
-        return 'images/singer/' . $attr;
+        return 'images/avatar/' . $attr;
     }
 }

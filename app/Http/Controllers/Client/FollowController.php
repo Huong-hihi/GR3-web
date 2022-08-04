@@ -40,7 +40,7 @@ class FollowController extends Controller
 
         $singerIds = Follow::where('user_id', $user->id)
             ->pluck('singer_id');
-        $listSingers = Singer::whereIn('id', $singerIds)->with('user')->get();
+        $listSingers = Singer::whereIn('id', $singerIds)->get();
 
         return view('client.my-follow')->with(compact('listSingers'));
     }

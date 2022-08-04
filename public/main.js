@@ -1,117 +1,116 @@
-(function () {
-    let nav = document.querySelectorAll(".nav-item")
+let nav = document.querySelectorAll(".nav-item")
 
-    for (let i = 0; i < nav.length; i++) {
-        nav[i].onclick = function() {
-            let j = 0;
-            while (j < nav.length) {
-                nav[j++].className = 'nav-item'
-            }
-            nav[i].className = 'nav-item active'
+for (let i = 0; i < nav.length; i++) {
+    nav[i].onclick = function() {
+        let j = 0;
+        while (j < nav.length) {
+            nav[j++].className = 'nav-item'
         }
+        nav[i].className = 'nav-item active'
     }
+}
 
 // MOBILE MENU
 
-    let menu_tablet = document.querySelector('.menu-tablet')
-    let menu_toggle = document.querySelector('.menu-toggle')
+let menu_tablet = document.querySelector('.menu-tablet')
+let menu_toggle = document.querySelector('.menu-toggle')
 
-    menu_toggle.onclick = function() {
-        menu_toggle.classList.toggle('active')
-        menu_tablet.classList.toggle('active')
-    }
+menu_toggle.onclick = function() {
+    menu_toggle.classList.toggle('active')
+    menu_tablet.classList.toggle('active')
+}
 
 
 // SLIDE
 
-    let big_slider = $('#big-slider')
+let big_slider = document.querySelector("#big-slider")
 
-    let big_slide_items = big_slider.find('.big-slide-item')
+let big_slide_items = big_slider.querySelectorAll('.big-slide-item')
 
-    let big_slide_index = 0
+let big_slide_index = 0
 
-    let slide_play = true
+let slide_play = true
 
-    let slide_next = big_slider.querySelector(".slide-next")
+let slide_next = big_slider.querySelector(".slide-next")
 
-    let slide_prev = big_slider.querySelector(".slide-prev")
+let slide_prev = big_slider.querySelector(".slide-prev")
 
-    let header = document.querySelector(".nav")
+let header = document.querySelector(".nav")
 
-    showSlide = (index) => {
-        big_slider.querySelector(".big-slide-item.active").classList.remove('active')
-        big_slide_items[index].classList.add('active')
+showSlide = (index) => {
+    big_slider.querySelector(".big-slide-item.active").classList.remove('active')
+    big_slide_items[index].classList.add('active')
+}
+
+nextSlide = () => {
+    big_slide_index = big_slide_index + 1 === big_slide_items.length ? 0 : big_slide_index + 1
+    showSlide(big_slide_index)
+}
+
+prevSlide = () => {
+    big_slide_index = big_slide_index - 1 < 0 ? big_slide_items.length - 1 : big_slide_index - 1
+    showSlide(big_slide_index)
+
+}
+
+
+
+
+
+slide_next.addEventListener("click", () => nextSlide());
+
+slide_prev.addEventListener("click", () => prevSlide());
+
+
+big_slider.addEventListener("mouseover", () => slide_play = false);
+
+big_slider.addEventListener("mouseleave", () => slide_play = true);
+
+setTimeout(() => big_slide_items[0].classList.add('active'), 200)
+
+setInterval(() => {
+    if (!slide_play) return
+    nextSlide()
+}, 5000);
+
+
+
+
+window.addEventListener("scroll", () => {
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+        header.classList.add("shrink")
+    } else {
+        header.classList.remove('shrink')
     }
-
-    nextSlide = () => {
-        big_slide_index = big_slide_index + 1 === big_slide_items.length ? 0 : big_slide_index + 1
-        showSlide(big_slide_index)
-    }
-
-    prevSlide = () => {
-        big_slide_index = big_slide_index - 1 < 0 ? big_slide_items.length - 1 : big_slide_index - 1
-        showSlide(big_slide_index)
-
-    }
+})
 
 
 
 
+let scroll = window.requestAnimationFrame || function(callback) {
+    window.setTimeout(callback, 1000 / 60);
+}
 
-    slide_next.addEventListener("click", () => nextSlide());
+let el_to_show = document.querySelectorAll('.show-on-scroll');
 
-    slide_prev.addEventListener("click", () => prevSlide());
+isElInViewPort = (el) => {
+    let rect = el.getBoundingClientRect();
 
+    let distance = 200;
 
-    big_slider.addEventListener("mouseover", () => slide_play = false);
+    return rect.top <= (window.innerHeight - distance || document.documentElement.clientHeight - distance);
 
-    big_slider.addEventListener("mouseleave", () => slide_play = true);
+}
 
-    setTimeout(() => big_slide_items[0].classList.add('active'), 200)
-
-    setInterval(() => {
-        if (!slide_play) return
-        nextSlide()
-    }, 5000);
-
-
-
-
-    window.addEventListener("scroll", () => {
-        if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-            header.classList.add("shrink")
-        } else {
-            header.classList.remove('shrink')
-        }
+loop = () => {
+    el_to_show.forEach(el => {
+        if (isElInViewPort(el))
+            el.classList.add('show');
     })
+    scroll(loop)
+}
 
-
-
-
-    let scroll = window.requestAnimationFrame || function(callback) {
-        window.setTimeout(callback, 1000 / 60);
-    }
-
-    let el_to_show = document.querySelectorAll('.show-on-scroll');
-
-    isElInViewPort = (el) => {
-        let rect = el.getBoundingClientRect();
-
-        let distance = 200;
-
-        return rect.top <= (window.innerHeight - distance || document.documentElement.clientHeight - distance);
-
-    }
-
-    loop = () => {
-        el_to_show.forEach(el => {
-            if (isElInViewPort(el))
-                el.classList.add('show');
-        })
-        scroll(loop)
-    }
-
-    loop();
+loop();
 
 
 // PROGRESS BAR
@@ -131,12 +130,11 @@
 
 //   MOBILE NAV
 
-    var list = document.querySelectorAll('.item')
+var list = document.querySelectorAll('.item')
 
-    function activeLink() {
-        list.forEach((item) => item.classList.remove('active'))
-        this.classList.add('active')
-    }
+function activeLink() {
+    list.forEach((item) => item.classList.remove('active'))
+    this.classList.add('active')
+}
 
-    list.forEach((item) => item.addEventListener('click', activeLink))
-})
+list.forEach((item) => item.addEventListener('click', activeLink))

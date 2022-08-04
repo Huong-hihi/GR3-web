@@ -12,6 +12,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
+    <meta name="referrer" content="no-referrer"/>
     <title>System</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -34,7 +35,7 @@
     <link rel="stylesheet" href=@yield('style') />
 </head>
 
-<body @yield('body-attribute') style="background-color: #192536;">
+<body @yield('body-attribute') style="background-color: #192536;" class="app-color">
     @yield('master')
     <script src="{{ cxl_asset('libs/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ cxl_asset('libs/popper/popper.min.js') }}"></script>

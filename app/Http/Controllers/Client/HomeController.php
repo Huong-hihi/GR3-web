@@ -8,7 +8,9 @@ use App\Http\Models\Category;
 use App\Http\Models\ListenLog;
 use App\Http\Models\Singer;
 use App\Http\Models\Song;
+use App\Http\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -35,9 +37,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        if ($user && $user->role == User::ROLE_ADMIN) return redirect()->route('admin.user.index');
+
         $categories = Category::orderBy('id','DESC')->get();
-        $songs = Song::orderBy('id','DESC')->with('singer')->paginate(8);
-        $singers = Singer::orderBy('id','DESC')->with('user')->paginate(8);
+        $songs = Song::orderBy('id','ASC')->with('singer')->paginate(8);
+        $singers = Singer::orderBy('songs_count','DESC')->withCount('songs')->paginate(8);
         $albums = $this->album::getAlbumHasWith();
         $rankSongs = $this->listenLog
             ->select(
@@ -62,5 +67,12 @@ class HomeController extends Controller
         $songs = $this->song->search($request->q);
 
         return view('client.search', compact('songs', 'search'));
+    }
+
+    public function category($id)
+    {
+        $songs = $this->song->getSongByCategory($id);
+
+        return view('client.category', compact('songs'));
     }
 }

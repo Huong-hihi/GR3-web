@@ -153,6 +153,7 @@
         </div>
     </div>
 
+    @if(\Request::route()->getName() != 'client.singer.album')
     <div class="section-tv">
         <div class="comment-wrapper">
             <div class="comment-form">
@@ -204,6 +205,7 @@
             </div>
         </div>
     </div>
+    @endif
 
 @endsection
 
@@ -333,13 +335,13 @@
                         data['commentable_type'] = 'song';
                     }
 
-                    let parentCommentTemplate = null;
+                    let parentCommentTemplate = '';
 
                     if(textArea.attr('data-textarea-parent-id')) {
                         parentCommentTemplate = `
                     <div class="comment-parent">
                         <div class="comment-parent-content">
-                        ${dataComment != null ? dataComment['content'].replace(/\n\r?/g, '<br />') : null}
+                        ${dataComment != null ? dataComment['content'].replace(/\n\r?/g, '<br />') : ''}
                         </div>
                     </div>`;
                     }

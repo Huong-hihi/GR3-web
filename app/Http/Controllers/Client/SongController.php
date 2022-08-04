@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Http\Models\User;
 use App\Traits\File;
 use App\Http\Models\Song;
 use App\Http\Models\Album;
@@ -41,6 +42,9 @@ class SongController extends Controller
     public function detail($id)
     {
         $user = Auth::user();
+
+        if ($user && $user->role == User::ROLE_ADMIN) return redirect()->route('admin.user.index');
+
         $categories = $this->category::orderBy('id','DESC')->paginate(3);
         $listSongs = [$this->song->where('id', $id)->with([
             'comments' => function($q) use ($user) {

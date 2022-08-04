@@ -25,9 +25,15 @@ class SongController extends Controller
         $this->file = $file;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $songs = $this->song->getAll();
+        $input = $request->all();
+        $songs = Song::when(isset($input['search']), function ($q) use ($input) {
+            $q->orWhere('id', $input['search'])
+                ->orWhere('name', 'like', '%' . $input['search'] . '%');
+        })
+            ->limit(20)
+            ->get();
 
         return view('admin.song.index', [
             'songs' => $songs

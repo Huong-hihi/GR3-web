@@ -23,7 +23,9 @@
                 </div>
             </div>
             <div class="singer-box-right">
-                <div class="singer-avatar" style="background-image: url({{ $singer->user->avatar }})"></div>
+                <div class="singer-avatar">
+                    <img src="{{ cxl_asset($singer->image) }}" alt="">
+                </div>
                 <div class="action">
                     <a class="action-btn play-all" href="{{ route('client.singer.album', ['id' => $singer->id]) }}">PLAY ALL <i class='bx bxs-playlist' ></i></a>
                     <div class="action-btn follow {{ count($singer->follows) > 0 ? 'active' : '' }}">FOLLOW <i class='bx bxs-heart' ></i></div>

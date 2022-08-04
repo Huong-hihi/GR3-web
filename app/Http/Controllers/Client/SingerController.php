@@ -8,6 +8,7 @@ use App\Http\Models\Category;
 use App\Http\Models\Follow;
 use App\Http\Models\Singer;
 use App\Http\Models\Song;
+use App\Http\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PHPUnit\Exception;
@@ -41,9 +42,10 @@ class SingerController extends Controller
     {
         $user = Auth::user();
 
+        if ($user && $user->role == User::ROLE_ADMIN) return redirect()->route('admin.user.index');
+
         $singer = Singer::where('id', $id)->with(
             [
-                'user',
                 'songs',
                 'follows' => function ($q) use ($user) {
                     if ($user) {
@@ -62,11 +64,11 @@ class SingerController extends Controller
 
     public function album(Request $request, $id)
     {
-        $singer = $this->singer::find($id, ['user']);
+        $singer = $this->singer::find($id);
         $user = Auth::user();
         $categories = $this->category::orderBy('id','DESC')->get();
 
-        $listSongs = [Song::where('singer_name', $singer->name)
+        $listSongs = Song::where('singer_name', $singer->name)
             ->when($user, function($q) use ($user){
                 $q->with('ratings');
             })
@@ -76,7 +78,7 @@ class SingerController extends Controller
                         ->orderBy('created_at', 'DESC');
                 },
             ])
-            ->first()];
+            ->get();
         $listRecommendSongs = [];
         $listSongsMyAlbumHash = [];
 

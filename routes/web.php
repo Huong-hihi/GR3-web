@@ -62,6 +62,8 @@ Route::group(['namespace' => 'Client'], function () {
 
     Route::get('search', 'HomeController@search')->name('home.search');
 
+    Route::get('category/{id}', 'HomeController@category')->name('home.category');
+
     Route::post('song/listen', 'ListenController@listen')->name('client.song.listen');
     Route::get('song/{id}', 'SongController@detail')->name('client.song.detail');
 
