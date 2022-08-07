@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Models\User;
 use App\Http\Models\Singer;
+use App\Traits\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -16,16 +17,23 @@ class SingerController extends Controller
 
     private $singer;
     private $user;
+    private $file;
 
-    public function __construct(Singer $singer, User $user)
+    public function __construct(Singer $singer, User $user, File $file)
     {
         $this->singer = $singer;
         $this->user = $user;
+        $this->file = $file;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $singers = $this->singer->getAll();
+        $input = $request->all();
+        $singers = Singer::when(isset($input['search']), function ($q) use ($input) {
+            $q->where('id', $input['search'])
+                ->orWhere('name', 'like', '%' . $input['search'] . '%');
+        })->paginate(10);
+
         return view('admin.singer.index', [
             'singers' => $singers
         ]);
@@ -40,7 +48,9 @@ class SingerController extends Controller
     {
         DB::beginTransaction();
         try {
-            $this->singer->store($request);
+            $data = $request->all();
+            $data['image'] = $this->file->saveFileToLocal($request, 'image', 'images/singer');
+            $this->singer->store($data);
 
             DB::commit();
 
@@ -57,17 +67,17 @@ class SingerController extends Controller
     {
         $singer = $this->singer->find($id);
 
-        if ($singer->user->role == User::ROLE_SINGER)
-            return view('admin.singer.edit', ['singer' => $singer]);
-
-        return abort(404);
+        return view('admin.singer.edit', ['singer' => $singer]);
     }
 
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
         try {
-            $this->singer->updateSinger($request, $id);
+            $data = $request->all();
+            $data['image'] = $this->file->saveFileToLocal($request, 'image', 'images/singer');
+
+            $this->singer->updateSinger($data, $id);
 
             DB::commit();
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Models\Singer;
 use App\Http\Models\Song;
 use App\Traits\File;
 use Illuminate\Http\Request;
@@ -29,11 +30,11 @@ class SongController extends Controller
     {
         $input = $request->all();
         $songs = Song::when(isset($input['search']), function ($q) use ($input) {
-            $q->orWhere('id', $input['search'])
+            $q->where('id', $input['search'])
                 ->orWhere('name', 'like', '%' . $input['search'] . '%');
         })
-            ->limit(20)
-            ->get();
+            ->with('category')
+            ->paginate(10);
 
         return view('admin.song.index', [
             'songs' => $songs
@@ -43,8 +44,9 @@ class SongController extends Controller
     public function create()
     {
         $parentCategories = $this->category->getAll();
+        $listSingerName = Singer::all();
 
-        return view('admin.song.create', ['parentCategories' => $parentCategories]);
+        return view('admin.song.create', ['parentCategories' => $parentCategories, 'listSingerName' => $listSingerName]);
     }
 
     public function store(Request $request)
@@ -67,10 +69,11 @@ class SongController extends Controller
 
     public function edit($id)
     {
-        $song = $this->song->find($id);
+        $song = Song::where('id', $id)->with('singer')->first();
         $parentCategories = $this->category->getAll();
+        $listSingerName = Singer::all();
 
-        return view('admin.song.edit', ['song' => $song, 'parentCategories' => $parentCategories]);
+        return view('admin.song.edit', ['song' => $song, 'parentCategories' => $parentCategories, 'listSingerName' => $listSingerName]);
     }
 
     public function update(Request $request, $id)
@@ -84,6 +87,9 @@ class SongController extends Controller
 
             if (!$data['image']) unset($data['image']);
             if (!$data['file_mp3']) unset($data['file_mp3']);
+
+            $countSinger = Singer::where('name', $data['singer_name'])->count();
+            if ($countSinger == 0) unset($data['singer_name']);
 
             $this->song->find($id)->update($data);
 

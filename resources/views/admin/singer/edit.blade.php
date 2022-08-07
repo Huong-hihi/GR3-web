@@ -20,7 +20,7 @@
                                     <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                                         <span class="d-none d-sm-block">Upload Avatar</span>
                                         <i class="bx bx-upload d-block d-sm-none"></i>
-                                        <input type="file" name="avatar" id="upload" class="account-file-input"
+                                        <input type="file" name="image" id="upload" class="account-file-input"
                                                hidden="" accept="image/png, image/jpeg">
                                     </label>
                                     <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
@@ -36,24 +36,6 @@
                             @csrf
                             <input type="hidden" name="_method" value="PUT">
                             <div class="row">
-{{--                                <div class="mb-3 col-md-6">--}}
-{{--                                    <label for="email" class="form-label">E-mail</label>--}}
-{{--                                    <input class="form-control" type="text" id="email" name="email"--}}
-{{--                                           value="{{ $singer->user->email }}" placeholder="" disabled>--}}
-{{--                                </div>--}}
-                                <div class="mb-3 col-md-6">
-                                    <div class="form-password-toggle">
-                                        <label class="form-label" for="basic-default-password12">Password</label>
-                                        <div class="input-group">
-                                            <input type="password" name="password" class="form-control"
-                                                   id="basic-default-password12" placeholder="············"
-                                                   aria-describedby="basic-default-password2">
-                                            <span id="basic-default-password2"
-                                                  class="input-group-text cursor-pointer"><i
-                                                    class="bx bx-hide"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="name" class="form-label">Name</label>
                                     <input class="form-control" type="text" id="name" name="name"

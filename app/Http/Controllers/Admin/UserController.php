@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Models\Album;
 use App\Http\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserCreateRequest;
@@ -26,9 +27,16 @@ class UserController extends Controller
         $this->album = $album;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = $this->user->getAll();
+        $input = $request->all();
+        $users = User::where('role', User::ROLE_USER)
+            ->when(isset($input['search']), function ($q) use ($input) {
+                $q->where('id', $input['search'])
+                    ->orWhere('name', 'like', '%' . $input['search'] . '%');
+            })
+            ->paginate(10);
+
         return view('admin.user.index', [
             'users' => $users
         ]);

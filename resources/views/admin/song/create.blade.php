@@ -42,11 +42,11 @@
                                 <input class="form-control" type="text" id="name" name="name" value="{{ old('name') }}" autofocus="">
                             </div>
                             <div class="mb-3 col-md-6">
-                                <label for="parent_id" class="form-label">Category:</label>
-                                <select id="parent_id" class="form-select" name="category_id">
+                                <label for="parent_id" class="form-label">Singer Name:</label>
+                                <select id="parent_id" class="form-select" name="singer_name">
                                     <option value="0">----------</option>
-                                    @foreach($parentCategories as $parentCategory)
-                                        <option value="{{ $parentCategory->id }}">{{ $parentCategory->name }}</option>
+                                    @foreach($listSingerName as $singerName)
+                                        <option value="{{ $singerName->name }}">{{ $singerName->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -55,12 +55,21 @@
                                 <input class="form-control" type="text" id="musician" name="musician" value="{{ old('musician') }}" placeholder="">
                             </div>
                             <div class="mb-3 col-md-6">
-                                <label for="email" class="form-label">Url</label>
-                                <input class="form-control" type="text" id="url" name="url" value="{{ old('url') }}" placeholder="">
+                                <label for="parent_id" class="form-label">Category:</label>
+                                <select id="parent_id" class="form-select" name="category_id">
+                                    <option value="0">----------</option>
+                                    @foreach($parentCategories as $parentCategory)
+                                        <option value="{{ $parentCategory->id }}">{{ $parentCategory->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="mb-3 col-md-6">
+{{--                            <div class="mb-3 col-md-6">--}}
+{{--                                <label for="email" class="form-label">Url</label>--}}
+{{--                                <input class="form-control" type="text" id="url" name="url" value="{{ old('url') }}" placeholder="">--}}
+{{--                            </div>--}}
+                            <div class="mb-3 col-md-12">
                                 <label for="email" class="form-label">Lyric</label>
-                                <textarea rows="5" class="form-control" type="text" id="lyric" name="lyric" placeholder="">{{ old('lyric') }}</textarea>
+                                <textarea rows="5" class="form-control" type="text" id="lyric" name="lyric" placeholder="" style="min-height: 300px">{{ old('lyric') }}</textarea>
                             </div>
                         </div>
                         <div class="mt-2">

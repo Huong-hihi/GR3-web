@@ -19,12 +19,10 @@ class Singer extends Model
      *
      * @var array
      */
-    protected $fillable = ['full_name', 'nickname', 'nation', 'prize', 'information', 'home_town', 'created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['name', 'full_name', 'nickname', 'nation', 'prize', 'image', 'information', 'home_town', 'created_at', 'updated_at', 'deleted_at'];
 
-    public static function store($request)
+    public static function store($data)
     {
-        $data = $request->all();
-
         return Singer::create($data);
     }
 
@@ -52,10 +50,8 @@ class Singer extends Model
         return Singer::all();
     }
 
-    public static function updateSinger($request, $id)
+    public static function updateSinger($data, $id)
     {
-        $data = $request->all();
-
         return Singer::where('id', $id)->first()->update($data);
     }
 
@@ -63,6 +59,6 @@ class Singer extends Model
     {
         if (strpos($attr, 'http') !== false) return $attr;
 
-        return 'images/avatar/' . $attr;
+        return '/images/singer/' . $attr;
     }
 }

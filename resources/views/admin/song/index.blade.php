@@ -26,28 +26,33 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Musician</th>
-                        <th>Url</th>
-                        <th>Lyric</th>
-                        <th>File_mp3</th>
+                        <th><strong>Id</strong></th>
+                        <th><strong>Name</strong></th>
+                        <th><strong>Category</strong></th>
+                        <th><strong>Singer</strong></th>
+                        <th><strong>Musician</strong></th>
+                        <th><strong>Lyric</strong></th>
+{{--                        <th>File_mp3</th>--}}
                         <th>Image</th>
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                     @foreach($songs as $song)
-
                     <tr>
-                        <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->id }}</strong></td>
-                        <td class = "threedots"><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->name }}</strong></td>
-                        <td>{{ $song->category_id }}</td>
-                        <td class = "threedots"><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->musician }}</strong></td>
-                        <td class = "threedots"><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->url }}</strong></td>
-                        <td class = "threedots"><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->lyric }}</strong></td>
-                        <td class = "threedots"><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->file_mp3 }}</strong></td>
-                        <td class = "threedots"><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $song->image }}</strong></td>
+                        <td><strong>{{ $song->id }}</strong></td>
+                        <td>{{ $song->name }}</td>
+                        <td class="threedots mw-100">{{ $song->category ? $song->category->name : '' }}</td>
+                        <td class="threedots mw-150">{{ $song->singer_name }}</td>
+                        <td class="threedots mw-150">{{ $song->musician }}</td>
+                        <td class="threedots">{{ $song->lyric }}</td>
+{{--                        <td class="threedots"><strong>{{ $song->file_mp3 }}</strong></td>--}}
+                        <td class="threedots mw-50">
+                            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                                <li class="avatar avatar-xs pull-up">
+                                    <img src="{{ $song->image ?? cxl_asset('images/default-user-image.png') }}" alt="image" class="rounded-circle">
+                                </li>
+                            </ul>
+                        </td>
                         {{-- <td>
                             <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="Lilian Fuller">
@@ -70,6 +75,9 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <div class="card">
+            {{ $songs->appends(request()->query())->links('admin.pagination') }}
         </div>
     </div>
 @endsection

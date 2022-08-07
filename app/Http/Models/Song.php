@@ -90,6 +90,11 @@ class Song extends Model
         return $this->belongsToMany(Album::class, 'album_song');
     }
 
+    public function category()
+    {
+        return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+
     public function listen_logs()
     {
         return $this->hasMany(ListenLog::class);

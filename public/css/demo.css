@@ -114,3 +114,24 @@
   /*-webkit-box-orient: vertical;*/
   /*display: block;*/
 }
+
+
+.mw-200 {
+    max-width: 200px;
+}
+
+.mw-150 {
+    max-width: 150px;
+}
+
+.mw-100 {
+    max-width: 100px;
+}
+
+.mw-50 {
+    max-width: 50px;
+}
+
+.mw-30 {
+    max-width: 30px;
+}

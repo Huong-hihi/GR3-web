@@ -5,7 +5,7 @@
         <div class="section-tv">
             <div class="section-wrapper" id="section-wrapper">
                 <div class="section-header">
-                    Result for "{{ $search['q'] }}"
+                    Kết quả tìm kiếm cho từ khóa: "{{ $search['q'] }}"
                 </div>
                 <div class="items">
                     @foreach($songs as $song)
