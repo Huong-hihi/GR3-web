@@ -123,7 +123,7 @@
                             <div class="inner">
                                 <ul>
                                     @foreach($listRecommendSongs as $song)
-                                        <li class="track-item" data="{{ json_encode() }}">
+                                        <li class="track-item">
                                             <a href="{{ route('client.song.detail', ['id'=> $song->id])}}">
                                             <div class="recommend-song">
                                                 <div class="recommend-song-image">
