@@ -140,7 +140,10 @@ jQuery(function ($) {
                 if (id !== index) {
                     playSong(id, self);
                 }
-            }), loadSong = function (id, self) {
+            }), loadSong = function (id, self = null) {
+            if (self == null) {
+                self = $('[data-playlist-song-index="' + id + '"]');
+            }
                 let songCurrent = $('[data-playlist-song-index="' + id + '"]')
                 let songId = songCurrent.attr('data-song-id');
                 let songRatingScore = songCurrent.attr('data-song-rating-score');
