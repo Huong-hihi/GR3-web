@@ -269,6 +269,11 @@
                 } else {
                     let songIdCurrent = $('#plList').attr('data-song-id-current');
                     changeAddTrackIcon('added');
+                    let id = $('#plList').attr('data-song-id-current')
+                    let songCurrent = $('[data-song-id="' + id + '"]')
+                    let songInformation = JSON.parse(songCurrent.attr('data-song-information')) ?? {};
+                    songInformation['inMyAlbum'] = true;
+                    songCurrent.attr('data-song-information', JSON.stringify(songInformation));
                     $.ajax({
                         url: '{{ route('client.my-album.update') }}',
                         method: "POST",
