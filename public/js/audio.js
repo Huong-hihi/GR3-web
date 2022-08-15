@@ -163,7 +163,7 @@ jQuery(function ($) {
 
                 let songInformation = JSON.parse(self.attr('data-song-information')) ?? {};
                 changeAddTrackIcon(songInformation['inMyAlbum'] ? 'added' : 'add');
-                songInformation['inMyAlbum'] = true;
+                songInformation['inMyAlbum'] = songInformation['inMyAlbum'] ? true : false;
                 self.attr('data-song-information', JSON.stringify(songInformation));
 
                 callAjax(dataPageTrack['listenSongURL'],'POST',{song_id: songId});
