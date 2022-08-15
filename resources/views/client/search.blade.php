@@ -10,7 +10,7 @@
                 </div>
                 <div class="items">
                     @foreach($songs as $song)
-                        <div class="item">
+                        <div class="item" style="width: 20%">
                             <a href="{{route('client.song.detail',[$song->id])}}"
                                class="">
                                 <div class="image-thumbnail">
