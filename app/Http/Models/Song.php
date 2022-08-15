@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Symfony\Component\Process\Process;
 
 
@@ -60,6 +61,10 @@ class Song extends Model
 
     public static function handleGetRecommendSong()
     {
+        $route = Route::currentRouteName();
+
+        if ($route != 'client.song.detail') return [];
+
         $user = Auth::user();
         if (!$user) return [];
 
