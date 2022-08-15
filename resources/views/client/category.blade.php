@@ -1,9 +1,10 @@
 @extends('client.master')
+@section('style', cxl_asset('css/core.css'))
 @section('content')
     <div class="container fluid">
         @include('client.layouts.banner')
         <div class="section-tv">
-            <div class="section-wrapper" id="section-wrapper">
+            <div class="section-wrapper" id="section-wrapper" style="width: 100%">
                 <div class="items">
                     @foreach($songs as $song)
                         <div class="item">
@@ -29,6 +30,7 @@
                         </div>
                     @endforeach
                 </div>
+                {{ $songs->appends(request()->query())->links('admin.pagination') }}
             </div>
         </div>
     </div>

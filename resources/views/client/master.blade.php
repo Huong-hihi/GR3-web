@@ -11,7 +11,9 @@
 
     <link rel="shortcut icon" href="{{ asset('./assets/img/Images/logo-foursquare.svg') }}">
 
+
     <!-- CSS -->
+    <link rel="stylesheet" href=@yield('style') />
     <link rel="stylesheet" href="{{ asset('./assets/component.css') }}">
     <link rel="stylesheet" href="{{ asset('./assets/style.css') }}">
     <link rel="stylesheet" href="{{ asset('./assets/grid.css') }}">

@@ -110,8 +110,8 @@ img {
 
 .items .item {
     margin: 10px;
-    width: 22%;
-    max-width: 200px;
+    width: 20%;
+    max-width: 209px;
     font-weight: 600;
 }
 
@@ -198,6 +198,7 @@ margin: 0 auto;
     justify-content: left;
     /*padding: 10px;*/
     font-weight: 600;
+    margin: 0;
 }
 
 .nav-container .nav-item2 {
