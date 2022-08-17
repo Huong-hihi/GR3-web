@@ -95,8 +95,7 @@ class User extends Authenticatable
         $data = $request->all();
 
         $user = User::find($id);
-//dd($id == Auth::user()->id);
-        if ($user && ($user->role == User::ROLE_ADMIN || $id == Auth::user()->id)) {
+        if ($user && (Auth::user()->role == User::ROLE_ADMIN || $id == Auth::user()->id)) {
             if ($request->hasFile('avatar')) {
                 $file= $request->file('avatar');
                 $filename= date('YmdHis') . '.' . $file->getClientOriginalExtension();
